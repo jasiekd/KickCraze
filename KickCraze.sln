@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KickCraze.Api", "KickCraze.Api\KickCraze.Api.csproj", "{BF9A1A42-0053-4089-B372-B1D54D68775B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A8EBFCD-BA70-4B05-B673-57088B23E993}
+	EndGlobalSection
+EndGlobal
