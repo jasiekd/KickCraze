@@ -6,8 +6,8 @@
   transition: background-color 0.3s;
 }
 .league:hover {
-  background-color: #40464f; /* Zmiana koloru tła po najechaniu kursorem */
-  cursor: pointer; /* Zmiana kształtu kursora na "ręka" wskazująca na to, że element jest klikalny */
+  background-color: #40464f; 
+  cursor: pointer; 
 }
 .league:hover:last-child,
 .league:not(:hover):last-child {

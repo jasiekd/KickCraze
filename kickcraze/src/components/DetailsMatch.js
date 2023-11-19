@@ -20,7 +20,15 @@ export default function DetailsMatch({ id }) {
   return (
     <div id="detailsMatch">
       <div id="detailsTitle">Szczegóły meczu</div>
-      <DetailsMatchHead date={data.date} homeImage={data.homeImage} homeName={data.homeName} homeScore={data.homeScore} awayImage={data.awayImage} awayName={data.awayName} awayScore={data.awayScore}/>
+      <DetailsMatchHead
+        date={data.date}
+        homeImage={data.homeImage}
+        homeName={data.homeName}
+        homeScore={data.homeScore}
+        awayImage={data.awayImage}
+        awayName={data.awayName}
+        awayScore={data.awayScore}
+      />
     </div>
   );
 }

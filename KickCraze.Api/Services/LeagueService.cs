@@ -20,7 +20,7 @@ namespace KickCraze.Api.Services
                 GetLeaguesResponseDto getLeaguesResponseDto = new();
                 string responseData = await response.Content.ReadAsStringAsync();
                 dynamic jsonData = JsonConvert.DeserializeObject(responseData);
-                getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "linkcostam", true));
+                getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "https://i.imgur.com/zDqOHeY.png", true));
                 foreach (var league in jsonData.competitions)
                 {
                     string type = league.type;
@@ -40,6 +40,7 @@ namespace KickCraze.Api.Services
         public async Task<IActionResult> GetLeagueTable(GetLeagueTableRequestDto getLeagueTableRequestDto)
         {
             var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings");
+            //var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings?date={getLeagueTableRequestDto.Date:yyyy-MM-dd}"); //pomyslec nad tym
             if(response.IsSuccessStatusCode)
             {
                 GetLeagueTableResponseDto getLeagueTableResponseDto = new();

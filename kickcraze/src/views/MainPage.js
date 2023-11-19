@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Leagues from "../components/Leagues";
 import MatchSchedule from "../components/MatchSchedule";
 import "../styles/MainStyle.css";
-import { useState,} from "react";
+import { useState } from "react";
 
 export default function MainPage() {
   const [activeLeagueID, setActiveLeagueID] = useState("ALL");
@@ -11,8 +11,8 @@ export default function MainPage() {
     <>
       <Header />
       <main className="content">
-        <Leagues setActiveLeagueID={setActiveLeagueID}/>
-        <MatchSchedule activeLeagueID={activeLeagueID}/>
+        <Leagues setActiveLeagueID={setActiveLeagueID} />
+        <MatchSchedule activeLeagueID={activeLeagueID} />
       </main>
     </>
   );

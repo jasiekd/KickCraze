@@ -10,11 +10,11 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #121212; 
+  background-color: #121212;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#top{
+#top {
   width: 100%;
   height: fit-content;
   display: flex;
@@ -22,7 +22,7 @@ body {
 }
 
 .content {
-  width: 95vw; 
+  width: 95vw;
   margin: 0 auto;
   margin-top: 1vw;
   flex-direction: row;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../styles/BigTeamLogoWithInscription.css"
+import "../styles/BigTeamLogoWithInscription.css";
 import "../styles/MainStyle.css";
 
 export default function BigTeamLogoWithInscription({ image, inscription }) {

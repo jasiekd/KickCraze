@@ -10,14 +10,15 @@
   background-color: #40464f;
   cursor: pointer;
 }
-.leagueI:hover:last-child, .leagueI:not(:hover):last-child {
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-  }
+.leagueI:hover:last-child,
+.leagueI:not(:hover):last-child {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 .leagueI .time,
 .leagueI .status {
   align-self: center;
-  flex:1;
+  flex: 1;
   display: flex;
   justify-content: center;
   min-width: 22px;

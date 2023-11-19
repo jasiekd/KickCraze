@@ -21,7 +21,7 @@ const override = {
   margin: "0 auto",
 };
 
-export default function MatchSchedule({activeLeagueID}) {
+export default function MatchSchedule({ activeLeagueID }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
   const [matchesData, setMatchesData] = useState([]);
@@ -35,7 +35,10 @@ export default function MatchSchedule({activeLeagueID}) {
   const FetchData = async () => {
     setIsLoading(true);
 
-    const data = await GetMatches({ leagueID: activeLeagueID, date: selectedDate });
+    const data = await GetMatches({
+      leagueID: activeLeagueID,
+      date: selectedDate,
+    });
     console.log(data);
     if (data !== null) {
       setMatchesData(data);
@@ -49,16 +52,14 @@ export default function MatchSchedule({activeLeagueID}) {
 
   useEffect(() => {
     FetchData();
-  }, [selectedDate,activeLeagueID]);
-
- 
+  }, [selectedDate, activeLeagueID]);
 
   return (
     <div id="matchSchedule">
       <div id="headerSchedule">
         <div id="title">Mecze</div>
         <DatePicker
-        dateFormat="dd/MM/yyyy"
+          dateFormat="dd/MM/yyyy"
           selected={selectedDate}
           onChange={(date) => handleDateChange(date)}
           locale="pl"

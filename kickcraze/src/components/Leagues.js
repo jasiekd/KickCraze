@@ -11,10 +11,10 @@ const override = {
   margin: "0 auto",
 };
 
-export default function Leagues({setActiveLeagueID}) {
+export default function Leagues({ setActiveLeagueID }) {
   const [isLoading, setIsLoading] = useState(true);
   const [leagueData, setLeagueData] = useState([]);
-  
+
   useEffect(() => {
     FetchData();
   }, []);
