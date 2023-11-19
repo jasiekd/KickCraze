@@ -1,0 +1,34 @@
+.league {
+  flex-direction: row;
+  display: flex;
+  border-top: 3px solid #a2b2ee;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+.league:hover {
+  background-color: #40464f; /* Zmiana koloru tła po najechaniu kursorem */
+  cursor: pointer; /* Zmiana kształtu kursora na "ręka" wskazująca na to, że element jest klikalny */
+}
+.league:hover:last-child,
+.league:not(:hover):last-child {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.league .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.league .active,
+.league .unactive {
+  width: 10px;
+  min-width: 10px;
+  height: 89px;
+  min-height: 89px;
+  display: flex;
+}
+.league .active {
+  background-color: #a2b2ee;
+}

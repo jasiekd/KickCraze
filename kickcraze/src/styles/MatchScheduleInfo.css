@@ -1,0 +1,46 @@
+.leagueI {
+  flex-direction: row;
+  display: flex;
+  border-bottom: 3px solid #a2b2ee;
+  transition: background-color 0.3s;
+  font-size: 18px;
+  align-items: center;
+}
+.leagueI:hover {
+  background-color: #40464f;
+  cursor: pointer;
+}
+.leagueI:hover:last-child, .leagueI:not(:hover):last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+.leagueI .time,
+.leagueI .status {
+  align-self: center;
+  flex:1;
+  display: flex;
+  justify-content: center;
+  min-width: 22px;
+  text-wrap: nowrap;
+}
+.leagueI .mainInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.leagueI .homeInfo,
+.leagueI .awayInfo {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+.leagueI .homeName,
+.leagueI .awayName {
+  flex-direction: row;
+  display: flex;
+}

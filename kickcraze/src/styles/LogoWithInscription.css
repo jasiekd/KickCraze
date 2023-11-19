@@ -1,0 +1,11 @@
+#top .logo {
+  width: 300px;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 1vw;
+}
+
+#top .logo:hover {
+  cursor: pointer;
+}

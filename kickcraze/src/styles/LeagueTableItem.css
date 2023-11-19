@@ -1,0 +1,40 @@
+.team {
+  flex-direction: row;
+  display: flex;
+  border-top: 3px solid #a2b2ee;
+  align-items: center;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.team .name {
+  flex-direction: row;
+  display: flex;
+  flex-grow: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 250px;
+}
+
+.team .position {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  min-width: 51px;
+  max-width: 51px;
+}
+
+.team .stats {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  min-width: 51px;
+  max-width: 51px;
+}

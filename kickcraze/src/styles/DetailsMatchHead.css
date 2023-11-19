@@ -1,0 +1,27 @@
+#detailsMatchHead {
+  display: flex;
+  justify-self: center;
+  width: fit-content;
+  background-color: #26292b;
+  border-radius: 15px;
+}
+
+#detailsMatchHead #gameInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#detailsMatchHead #date {
+  color: #afafaf;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#detailsMatchHead #score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: 36px;
+  font-weight: bold;
+}

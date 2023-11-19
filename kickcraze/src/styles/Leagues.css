@@ -1,0 +1,16 @@
+#leagues {
+  background-color: #2e3239;
+  width: fit-content;
+  border-radius: 15px;
+  margin-right: 1vw;
+  min-width: 300px;
+  height: fit-content;
+}
+#leagues #title {
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  height: 40px;
+}

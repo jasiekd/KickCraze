@@ -1,0 +1,27 @@
+#matchSchedule {
+  background-color: #2e3239;
+  width: 100%;
+  border-radius: 15px;
+  height: fit-content;
+  min-width: 924px;
+}
+#matchSchedule .leagueI:last-child {
+    border-bottom: none;
+  }
+
+#matchSchedule #headerSchedule {
+    display: flex;
+  flex-direction: row;
+  height: 6vh;
+  align-items: center;
+  margin-left: 30px;
+}
+
+#matchSchedule #title, #matchSchedule #date {
+  font-size: 30px;
+  font-weight: bold;
+}
+#matchSchedule #date {
+  color: #AFAFAF
+}
+

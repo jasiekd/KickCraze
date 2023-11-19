@@ -1,0 +1,58 @@
+#leagueTable {
+    background-color: #2e3239;
+    width: 100%;
+    border-radius: 15px;
+    min-width: 700px;
+    height: fit-content;
+  }
+
+  #leagueTable #leagueTitle {
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 80px;
+
+    margin-left: 30px;
+  }
+
+  #leagueTable #table {
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
+  }
+  #leagueTable #table #tableHeader {
+    background-color: #26292B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+  #leagueTable #table #tableHeader .positionH{
+    flex:1;
+    display: flex;
+    justify-content: center;
+    min-width: 51px;
+    max-width: 51px;
+  }
+  #leagueTable #table #tableHeader .nameH{
+    flex-direction: row;
+    display: flex;
+     flex-grow: 1;/* Pozwala elementowi "name" zajmować dostępne miejsce */
+    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+    text-overflow: ellipsis;
+    min-width: 250px;
+  }
+  #leagueTable #table #tableHeader .statsH{
+    min-width: 51px;
+    max-width: 51px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex: 1; /* Rozciągnij kolumny, aby zajmowały tyle samo miejsca */
+    text-align: center;
+    font-weight: bold;
+  }

@@ -1,0 +1,19 @@
+.leagueLogo {
+  min-width: 77px;
+  width: 77px;
+  height: 76px;
+  background-color: #cecece;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.leagueEmblem {
+  width: 80%;
+  height: 80%;
+}
