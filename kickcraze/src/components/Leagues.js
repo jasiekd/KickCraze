@@ -4,10 +4,16 @@ import "../styles/MainStyle.css";
 import LeagueItem from "./LeagueItem";
 import { GetLeagues } from "../controllers/LeagueController";
 import { useState, useEffect } from "react";
+import { HashLoader } from "react-spinners";
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+};
 
 export default function Leagues() {
   const [isLoading, setIsLoading] = useState(true);
-  const [leagueData, setLeagueData] = useState([ ]);
+  const [leagueData, setLeagueData] = useState([]);
 
   useEffect(() => {
     FetchData();
@@ -40,17 +46,32 @@ export default function Leagues() {
   return (
     <div id="leagues">
       <div id="title">Dostępne Ligi</div>
-      {isLoading ? <div>Ładowanie lig</div> : leagueData.map((element) => (
-        <LeagueItem
-          key={element.leagueID}
-          id={element.leagueID}
-          name={element.leagueName}
-          photo={element.leagueEmblemURL}
-          active={element.active}
-          onClick={() => handleTileClick(element.leagueID)}
-        />
-      ))}
-      
+      {isLoading ? (
+        <>
+          <HashLoader
+            loading={isLoading}
+            cssOverride={override}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            color="#ffffff"
+            size={50}
+          />
+          <div className="loadingText">Ładowanie lig</div>
+        </>
+      ) : leagueData.length === 0 ? (
+        <div className="loadingText">Brak lig</div>
+      ) : (
+        leagueData.map((element) => (
+          <LeagueItem
+            key={element.leagueID}
+            id={element.leagueID}
+            name={element.leagueName}
+            photo={element.leagueEmblemURL}
+            active={element.active}
+            onClick={() => handleTileClick(element.leagueID)}
+          />
+        ))
+      )}
     </div>
   );
 }

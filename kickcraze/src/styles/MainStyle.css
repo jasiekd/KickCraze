@@ -29,3 +29,13 @@ body {
   display: flex;
   min-width: 700px;
 }
+
+.loadingText {
+  color: white;
+  margin-top: 10px;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
