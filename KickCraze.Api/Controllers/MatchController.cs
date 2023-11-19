@@ -15,15 +15,26 @@ namespace KickCraze.Api.Controllers
         {
             _matchService = matchService;
         }
+
         [HttpPost("GetMatches")]
         [AllowAnonymous]
         public async Task<IActionResult> GetMatches([FromBody] GetMatchesRequestDto matchesData)
         {
-            var result = _matchService.GetMatches(matchesData);
-            if (result == null)
-                return NotFound();
-            else
-                return Ok(result);
+            return await _matchService.GetMatches(matchesData);
+        }
+
+        [HttpPost("GetMatchInfo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetMatchInfo([FromBody] GetMatchesRequestDto matchesData)
+        {
+            return await _matchService.GetMatchInfo(matchesData);
+        }
+
+        [HttpPost("PredictResult")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PredictResult([FromBody] GetMatchesRequestDto matchesData)
+        {
+            return await _matchService.PredictResult(matchesData);
         }
     }
 }

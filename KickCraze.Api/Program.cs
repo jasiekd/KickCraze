@@ -1,4 +1,5 @@
 using KickCraze.Api.Data;
+using KickCraze.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace KickCraze.Api
@@ -15,7 +16,7 @@ namespace KickCraze.Api
             builder.Services.AddCors(options => {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                   policy => {
-                      policy.WithOrigins("http://localhost:7104")
+                      policy.WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .WithMethods("GET", "POST")
                 .AllowAnyMethod()
@@ -34,6 +35,14 @@ namespace KickCraze.Api
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSingleton(provider =>
+            {
+                return new CustomHttpClient(builder.Configuration["FootballApiInfo:APIURL"], builder.Configuration["FootballApiInfo:Token"]);
+            });
+
+            builder.Services.AddScoped<IMatchService, MatchService>();
+            builder.Services.AddScoped<ILeagueService, LeagueService>();
 
             var app = builder.Build();
 
