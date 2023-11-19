@@ -21,7 +21,7 @@ const override = {
   margin: "0 auto",
 };
 
-export default function MatchSchedule() {
+export default function MatchSchedule({activeLeagueID}) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
   const [matchesData, setMatchesData] = useState([]);
@@ -35,7 +35,7 @@ export default function MatchSchedule() {
   const FetchData = async () => {
     setIsLoading(true);
 
-    const data = await GetMatches({ leagueID: "ALL", date: selectedDate });
+    const data = await GetMatches({ leagueID: activeLeagueID, date: selectedDate });
     console.log(data);
     if (data !== null) {
       setMatchesData(data);
@@ -49,7 +49,7 @@ export default function MatchSchedule() {
 
   useEffect(() => {
     FetchData();
-  }, [selectedDate]);
+  }, [selectedDate,activeLeagueID]);
 
  
 

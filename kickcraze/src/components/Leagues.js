@@ -11,10 +11,10 @@ const override = {
   margin: "0 auto",
 };
 
-export default function Leagues() {
+export default function Leagues({setActiveLeagueID}) {
   const [isLoading, setIsLoading] = useState(true);
   const [leagueData, setLeagueData] = useState([]);
-
+  
   useEffect(() => {
     FetchData();
   }, []);
@@ -33,6 +33,7 @@ export default function Leagues() {
 
   const handleTileClick = (id) => {
     const updatedData = leagueData.map((element) => {
+      setActiveLeagueID(id);
       if (element.leagueID === id) {
         return { ...element, active: true };
       } else {
