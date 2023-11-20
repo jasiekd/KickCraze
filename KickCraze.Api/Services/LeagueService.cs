@@ -39,8 +39,8 @@ namespace KickCraze.Api.Services
         }
         public async Task<IActionResult> GetLeagueTable(GetLeagueTableRequestDto getLeagueTableRequestDto)
         {
-            var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings");
-            //var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings?date={getLeagueTableRequestDto.Date:yyyy-MM-dd}"); //pomyslec nad tym
+            //var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings");
+            var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings?date={getLeagueTableRequestDto.Date:yyyy-MM-dd}"); //pomyslec nad tym
             if(response.IsSuccessStatusCode)
             {
                 GetLeagueTableResponseDto getLeagueTableResponseDto = new();

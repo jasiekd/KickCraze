@@ -49,6 +49,7 @@ namespace KickCraze.Api.Services
                     string result = match.score.winner;
                     int leagueID = match.competition.id;
                     string leagueName = match.competition.name;
+                    string leagueSeason = match.season.startDate;
                     DateTime matchDate = match.utcDate;
                     TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
                     DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
@@ -56,7 +57,7 @@ namespace KickCraze.Api.Services
                     matchDate = polandDateTime;
 
 
-                    allMatches.Add(new(matchID, leagueID, leagueName, matchStatus, homeTeamID, homeTeamName, homeTeamScore, homeTeamCrestURL, awayTeamID, awayTeamName, awayTeamScore, awayTeamCrestURL, matchDate));
+                    allMatches.Add(new(matchID, leagueID, leagueName, leagueSeason[..4], matchStatus, homeTeamID, homeTeamName, homeTeamScore, homeTeamCrestURL, awayTeamID, awayTeamName, awayTeamScore, awayTeamCrestURL, matchDate));
                 }
 
                 List<GetMatchesResponseDto> matchesDataDto = new();
@@ -71,7 +72,8 @@ namespace KickCraze.Api.Services
                         GetMatchesResponseDto tmp = new()
                         {
                             LeagueID = match.LeagueID,
-                            LeagueName = match.LeagueName
+                            LeagueName = match.LeagueName,
+                            LeagueSeason = match.LeagueSeason,
                         };
                         tmp.Matches.Add(match);
                         matchesDataDto.Add(tmp);
