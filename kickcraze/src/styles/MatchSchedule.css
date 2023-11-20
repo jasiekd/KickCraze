@@ -26,13 +26,10 @@
   margin-left: 5px;
   color: #afafaf;
 }
-#matchSchedule #date {
-  margin-left: 5px;
-  color: #afafaf;
-}
+
 #matchSchedule #date:hover {
-  background-color: #40464f; 
-  cursor: pointer; 
+  background-color: #40464f;
+  cursor: pointer;
 }
 
 .dark-theme-calendar {

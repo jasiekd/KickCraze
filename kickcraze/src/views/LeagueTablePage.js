@@ -5,12 +5,16 @@ import "../styles/MainStyle.css";
 import { useParams } from "react-router-dom";
 
 export default function LeagueTablePage() {
-  const { id } = useParams();
+  const { leagueSeason, leagueID, date } = useParams();
   return (
     <>
       <Header />
       <main className="content">
-        <LeagueTable id={id} />
+        <LeagueTable
+          leagueSeason={leagueSeason}
+          leagueID={leagueID}
+          date={date}
+        />
       </main>
     </>
   );

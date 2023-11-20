@@ -1,0 +1,15 @@
+#notFound {
+  background-color: #2e3239;
+  width: 95vw;
+  margin: 0 auto;
+  margin-top: 1vh;
+  padding-top: 0 auto;
+  padding-bottom: 0 auto;
+  border-radius: 15px;
+  min-width: 700px;
+  text-align: center;
+  font-weight: bold;
+}
+#notFound a:-webkit-any-link {
+  color: white;
+}

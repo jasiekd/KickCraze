@@ -1,7 +1,6 @@
 import * as React from "react";
 import "../styles/LeagueTable.css";
 import "../styles/MainStyle.css";
-import image from "../images/homeTeamLogo.png";
 import LeagueTableItem from "./LeagueTableItem";
 import { GetLeagueTable } from "../controllers/LeagueController";
 import { useState, useEffect } from "react";
@@ -12,24 +11,37 @@ const override = {
   margin: "0 auto",
 };
 
-export default function LeagueTable({ id }) {
+export default function LeagueTable({ leagueSeason, leagueID, date }) {
   const [isLoading, setIsLoading] = useState(true);
   const [leagueTableData, setLeagueTableData] = useState({});
 
   useEffect(() => {
     FetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const FetchData = async () => {
     setIsLoading(true);
 
-    const data = await GetLeagueTable({ leagueID: id });
-    //console.log(data);
+    const data = await GetLeagueTable({
+      leagueID: leagueID,
+      leagueSeason: leagueSeason,
+      date: date,
+    });
+    console.log(data);
     if (data !== null) {
       setLeagueTableData(data);
     }
 
     setIsLoading(false);
+  };
+
+  const convertDateFormat = (originalDate) => {
+    const [month, day, year] = originalDate.split("-");
+
+    const newDateFormat = `${day}/${month}/${year}`;
+
+    return newDateFormat;
   };
 
   return (
@@ -46,11 +58,14 @@ export default function LeagueTable({ id }) {
           />
           <div className="loadingText">Ładowanie tabeli</div>
         </>
-      ) : leagueTableData === null ? (
+      ) : Object.keys(leagueTableData).length === 0 ? (
         <div className="loadingText">Błąd przy pobieraniu tabeli</div>
       ) : (
         <>
-          <div id="leagueTitle">Tabela {leagueTableData.nameLeague}</div>
+          <div id="leagueTitle">
+            Tabela {leagueTableData.nameLeague}
+            <div id="date">{convertDateFormat(date)}</div>
+          </div>
           <div id="table">
             <div id="tableHeader">
               <div title="Pozycja w tabeli" className="positionH">

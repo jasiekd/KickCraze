@@ -13,10 +13,13 @@ export default class LeagueService {
 
   static async GetLeagueTable(requestData) {
     try {
+      const date = new Date(requestData.date);
       const response = await axios.post(
         backendHostname + "League/GetLeagueTable",
         {
           leagueID: requestData.leagueID,
+          leagueSeason: requestData.leagueSeason,
+          date: date,
         }
       );
       return response;

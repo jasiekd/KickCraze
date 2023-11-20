@@ -46,12 +46,22 @@ export default function MatchSchedule({ activeLeagueID }) {
 
     setIsLoading(false);
   };
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${month}-${day}-${year}`;
+  };
+
   useEffect(() => {
     FetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate, activeLeagueID]);
 
   return (
@@ -88,6 +98,8 @@ export default function MatchSchedule({ activeLeagueID }) {
               key={league.leagueID}
               id={league.leagueID}
               name={league.leagueName}
+              season={league.leagueSeason}
+              date={formatDate(selectedDate)}
             />
             {league.matches.map((match) => (
               <MatchScheduleInfo key={match.matchID} match={match} />
