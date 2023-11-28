@@ -9,6 +9,7 @@ export default function MatchScheduleInfo({ match }) {
   const dateObject = new Date(match.matchDate);
   const hours = dateObject.getHours();
   const minutes = dateObject.getMinutes();
+  console.log(match)
   return (
     <div
       className="leagueI"
@@ -23,14 +24,14 @@ export default function MatchScheduleInfo({ match }) {
             <SmallTeamLogo image={match.homeTeamCrestURL} />
             {match.homeTeamName}
           </div>
-          <div className="awayName">{match.homeTeamScore}</div>
+          <div className="awayName">{match.homeTeamScore === null ? "-" : match.homeTeamScore}</div>
         </div>
         <div className="awayInfo">
           <div className="homeName">
             <SmallTeamLogo image={match.awayTeamCrestURL} />
             {match.awayTeamName}
           </div>
-          <div className="awayName">{match.awayTeamScore}</div>
+          <div className="awayName">{match.awayTeamScore === null ? "-" : match.awayTeamScore}</div>
         </div>
       </div>
       <div className="status">{match.matchStatus}</div>
