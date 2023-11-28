@@ -56,6 +56,17 @@ namespace KickCraze.Api.Services
 
                     matchDate = polandDateTime;
 
+                    if (matchStatus.Equals("FINISHED"))
+                    {
+                        matchStatus = "Koniec";
+                    }else if(matchStatus.Equals("IN_PLAY") || matchStatus.Equals("PAUSED"))
+                    {
+                        matchStatus = "W trakcie";
+                    }
+                    else
+                    {
+                        matchStatus = string.Empty;
+                    }
 
                     allMatches.Add(new(matchID, leagueID, leagueName, leagueSeason[..4], matchStatus, homeTeamID, homeTeamName, homeTeamScore, homeTeamCrestURL, awayTeamID, awayTeamName, awayTeamScore, awayTeamCrestURL, matchDate));
                 }
