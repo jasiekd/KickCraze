@@ -16,3 +16,13 @@
   height: 80px;
   margin-left: 30px;
 }
+
+#detailsMatch #lastMatches {
+margin-top: 20px;
+flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  width: fit-content;
+  
+}

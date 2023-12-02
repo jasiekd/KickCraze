@@ -13,4 +13,14 @@ export default class MatchService {
       return error.response;
     }
   }
+  static async GetMatchInfo(requestData) {
+    try {
+      const response = await axios.post(backendHostname + "Match/GetMatchInfo", {
+        matchID: requestData.matchID
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
 }

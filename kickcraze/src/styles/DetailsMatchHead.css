@@ -1,9 +1,11 @@
 #detailsMatchHead {
   display: flex;
   justify-self: center;
+  justify-content: center;
   width: fit-content;
   background-color: #26292b;
   border-radius: 15px;
+  min-width: 50vw;
 }
 
 #detailsMatchHead #gameInfo {
@@ -24,4 +26,13 @@
   flex: 1;
   font-size: 36px;
   font-weight: bold;
+    flex-direction: column;
+}
+
+#detailsMatchHead .teamInfo {
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+  flex: 1;
 }
