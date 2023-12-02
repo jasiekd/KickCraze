@@ -1,6 +1,7 @@
 ﻿using KickCraze.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace KickCraze.Api.Services
 {
@@ -103,10 +104,38 @@ namespace KickCraze.Api.Services
             }
         }
 
-        public async Task<IActionResult> GetMatchInfo(GetMatchesRequestDto matchesData)
+        public async Task<IActionResult> GetMatchInfo(GetMatchInfoRequestDto matchData)
         {
-            return new OkResult();
+            HttpResponseMessage? response = await _customHttpClient.GetAsync($"matches/{matchData.MatchID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                dynamic jsonData = JsonConvert.DeserializeObject(content);
+
+                DateTime matchDate = jsonData.utcDate;
+                TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
+                DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
+                string homeTeamID = jsonData.homeTeam.id;
+                string homeTeamName = jsonData.homeTeam.name;
+                string homeTeamCrest = jsonData.homeTeam.crest;
+                string homeTeamScore = jsonData.score.fullTime.home;
+                string homeTeamScoreBreak = jsonData.score.halfTime.home;
+                string awayTeamID = jsonData.awayTeam.id;
+                string awayTeamName = jsonData.awayTeam.name;
+                string awayTeamCrest = jsonData.awayTeam.crest;
+                string awayTeamScore = jsonData.score.fullTime.away;
+                string awayTeamScoreBreak = jsonData.score.halfTime.away;
+
+                GetMatchInfoResponseDto responseDto = new(polandDateTime.ToString("dd.MM.yyyy HH:mm"), homeTeamID, homeTeamName, homeTeamCrest, homeTeamScore, homeTeamScoreBreak, awayTeamID, awayTeamName, awayTeamCrest, awayTeamScore, awayTeamScoreBreak);
+                return new OkObjectResult(responseDto);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
         }
+
         public async Task<IActionResult> PredictResult(GetMatchesRequestDto matchesData)
         {
             return new OkResult();
