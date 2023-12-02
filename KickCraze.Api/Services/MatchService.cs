@@ -18,7 +18,7 @@ namespace KickCraze.Api.Services
             HttpResponseMessage? response;
             if (matchesData.LeagueID == "ALL")
             {
-                response = await _customHttpClient.GetAsync($"matches?date={matchesData.Date:yyyy-MM-dd}");
+                response = await _customHttpClient.GetAsync($"matches?date={matchesData.Date:yyyy-MM-dd}&competitions=2002,2015,2021,2014,2019");
             }
             else
             {
@@ -59,9 +59,13 @@ namespace KickCraze.Api.Services
                     if (matchStatus.Equals("FINISHED"))
                     {
                         matchStatus = "Koniec";
-                    }else if(matchStatus.Equals("IN_PLAY") || matchStatus.Equals("PAUSED"))
+                    }
+                    else if (matchStatus.Equals("IN_PLAY") || matchStatus.Equals("PAUSED"))
                     {
                         matchStatus = "W trakcie";
+                    }else if (matchStatus.Equals("POSTPONED"))
+                    {
+                        matchStatus = "Przełożony";
                     }
                     else
                     {

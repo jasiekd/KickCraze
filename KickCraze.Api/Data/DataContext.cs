@@ -21,18 +21,6 @@ namespace KickCraze.Api.Data
             modelBuilder.Entity<LeaguesEntity>().HasData(
                 new LeaguesEntity
                 {
-                    LeagueID = 2013,
-                    LeagueName = "Campeonato Brasileiro Série A",
-                    LeagueEmblemURL = "https://crests.football-data.org/764.svg",
-                },
-                new LeaguesEntity
-                {
-                    LeagueID = 2016,
-                    LeagueName = "Championship",
-                    LeagueEmblemURL = "https://crests.football-data.org/ELC.png",
-                },
-                new LeaguesEntity
-                {
                     LeagueID = 2021,
                     LeagueName = "Premier League",
                     LeagueEmblemURL = "https://crests.football-data.org/PL.png",
@@ -54,18 +42,6 @@ namespace KickCraze.Api.Data
                     LeagueID = 2019,
                     LeagueName = "Serie A",
                     LeagueEmblemURL = "https://crests.football-data.org/SA.png",
-                },
-                new LeaguesEntity
-                {
-                    LeagueID = 2003,
-                    LeagueName = "Eredivisie",
-                    LeagueEmblemURL = "https://crests.football-data.org/ED.png",
-                },
-                new LeaguesEntity
-                {
-                    LeagueID = 2017,
-                    LeagueName = "Primeira Liga",
-                    LeagueEmblemURL = "https://crests.football-data.org/PPL.png",
                 },
                 new LeaguesEntity
                 {

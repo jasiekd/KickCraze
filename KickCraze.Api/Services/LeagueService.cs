@@ -1,41 +1,59 @@
-﻿using KickCraze.Api.Dto;
+﻿using KickCraze.Api.Data;
+using KickCraze.Api.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace KickCraze.Api.Services
 {
     public class LeagueService : ILeagueService
     {
+        private readonly DataContext _context;
         private readonly CustomHttpClient _customHttpClient;
 
-        public LeagueService(CustomHttpClient customHttpClient)
+        public LeagueService(CustomHttpClient customHttpClient, DataContext dataContext)
         {
+            _context = dataContext;
             _customHttpClient = customHttpClient;
         }
         public async Task<IActionResult> GetLeagues()
         {
-            var response = await _customHttpClient.GetAsync($"competitions/");
-            if(response.IsSuccessStatusCode)
-            {
-                GetLeaguesResponseDto getLeaguesResponseDto = new();
-                string responseData = await response.Content.ReadAsStringAsync();
-                dynamic jsonData = JsonConvert.DeserializeObject(responseData);
-                getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "https://i.imgur.com/zDqOHeY.png", true));
-                foreach (var league in jsonData.competitions)
-                {
-                    string type = league.type;
-                    if (type != "LEAGUE") continue;
-                    string leagueID = league.id;
-                    string leagueName = league.name;
-                    string leagueEmblemURL = league.emblem;
-                    getLeaguesResponseDto.Leagues.Add(new LeagueElement(leagueID, leagueName, leagueEmblemURL));
-                }
-                return new OkObjectResult(getLeaguesResponseDto);
-            }
-            else
+            if(_context.Leagues == null)
             {
                 return new BadRequestResult();
             }
+            var leagues = await _context.Leagues.AsQueryable().OrderBy(x => x.LeagueName).ToListAsync(); 
+            GetLeaguesResponseDto getLeaguesResponseDto = new();
+            getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "https://i.imgur.com/zDqOHeY.png", true));
+            foreach (var leagueElement in leagues)
+            {
+                getLeaguesResponseDto.Leagues.Add(new LeagueElement(leagueElement.LeagueID.ToString(), leagueElement.LeagueName, leagueElement.LeagueEmblemURL));
+            }
+            return new OkObjectResult(getLeaguesResponseDto);
+            
+
+            //var response = await _customHttpClient.GetAsync($"competitions/");
+            //if(response.IsSuccessStatusCode)
+            //{
+            //    GetLeaguesResponseDto getLeaguesResponseDto = new();
+            //    string responseData = await response.Content.ReadAsStringAsync();
+            //    dynamic jsonData = JsonConvert.DeserializeObject(responseData);
+            //    getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "https://i.imgur.com/zDqOHeY.png", true));
+            //    foreach (var league in jsonData.competitions)
+            //    {
+            //        string type = league.type;
+            //        if (type != "LEAGUE") continue;
+            //        string leagueID = league.id;
+            //        string leagueName = league.name;
+            //        string leagueEmblemURL = league.emblem;
+            //        getLeaguesResponseDto.Leagues.Add(new LeagueElement(leagueID, leagueName, leagueEmblemURL));
+            //    }
+            //    return new OkObjectResult(getLeaguesResponseDto);
+            //}
+            //else
+            //{
+            //    return new BadRequestResult();
+            //}
         }
         public async Task<IActionResult> GetLeagueTable(GetLeagueTableRequestDto getLeagueTableRequestDto)
         {
