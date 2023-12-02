@@ -13,6 +13,7 @@ export default function DetailsMatch({ id }) {
 
   useEffect(() => {
     FetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const FetchData = async () => {

@@ -107,7 +107,7 @@ export default function LeagueTable({ leagueSeason, leagueID, date }) {
                 win={team.won}
                 draw={team.draw}
                 lose={team.lost}
-                goals={team.goalsFor}
+                goals={`${team.goalsFor}:${team.goalsAgainst}`}
                 diffGoals={team.goalDifference}
                 points={team.points}
               />
