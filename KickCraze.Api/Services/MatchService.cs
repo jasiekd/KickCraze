@@ -113,27 +113,114 @@ namespace KickCraze.Api.Services
                 string content = await response.Content.ReadAsStringAsync();
                 dynamic jsonData = JsonConvert.DeserializeObject(content);
 
-                DateTime matchDate = jsonData.utcDate;
-                TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
-                DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
-                string homeTeamID = jsonData.homeTeam.id;
-                string homeTeamName = jsonData.homeTeam.name;
-                string homeTeamCrest = jsonData.homeTeam.crest;
-                string homeTeamScore = jsonData.score.fullTime.home;
-                string homeTeamScoreBreak = jsonData.score.halfTime.home;
-                string awayTeamID = jsonData.awayTeam.id;
-                string awayTeamName = jsonData.awayTeam.name;
-                string awayTeamCrest = jsonData.awayTeam.crest;
-                string awayTeamScore = jsonData.score.fullTime.away;
-                string awayTeamScoreBreak = jsonData.score.halfTime.away;
+                MatchInfoFromApi tmp = await GetMatch(jsonData);
 
-                GetMatchInfoResponseDto responseDto = new(polandDateTime.ToString("dd.MM.yyyy HH:mm"), homeTeamID, homeTeamName, homeTeamCrest, homeTeamScore, homeTeamScoreBreak, awayTeamID, awayTeamName, awayTeamCrest, awayTeamScore, awayTeamScoreBreak);
+                //DateTime matchDate = jsonData.utcDate;
+                //TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
+                //DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
+                //string homeTeamID = jsonData.homeTeam.id;
+                //string homeTeamName = jsonData.homeTeam.name;
+                //string homeTeamCrest = jsonData.homeTeam.crest;
+                //string homeTeamScore = jsonData.score.fullTime.home;
+                //string homeTeamScoreBreak = jsonData.score.halfTime.home;
+                //string awayTeamID = jsonData.awayTeam.id;
+                //string awayTeamName = jsonData.awayTeam.name;
+                //string awayTeamCrest = jsonData.awayTeam.crest;
+                //string awayTeamScore = jsonData.score.fullTime.away;
+                //string awayTeamScoreBreak = jsonData.score.halfTime.away;
+
+                GetMatchInfoResponseDto responseDto = new(tmp.MatchDate.ToString("dd.MM.yyyy HH:mm"), tmp.HomeTeamID.ToString(), tmp.HomeTeamName, tmp.HomeTeamCrestURL, tmp.HomeTeamScore.ToString(), tmp.HomeTeamScoreBreak.ToString(), tmp.AwayTeamID.ToString(), tmp.AwayTeamName, tmp.AwayTeamCrestURL, tmp.AwayTeamScore.ToString(), tmp.AwayTeamScoreBreak.ToString());
                 return new OkObjectResult(responseDto);
             }
             else
             {
                 return new BadRequestResult();
             }
+        }
+
+        private async Task<MatchInfoFromApi> GetMatch(dynamic match)
+        {
+            int matchID = match.id;
+            string matchStatus = match.status;
+            int matchDay = match.matchday;
+            string startDate = match.season.startDate;
+            int homeTeamID = match.homeTeam.id;
+            string homeTeamName = match.homeTeam.name;
+            string homeTeamCrestURL = match.homeTeam.crest;
+            int? homeTeamScore = match.score.fullTime.home;
+            int? homeTeamScoreBreak = match.score.halfTime.home;
+            int awayTeamID = match.awayTeam.id;
+            string awayTeamName = match.awayTeam.name;
+            string awayTeamCrestURL = match.awayTeam.crest;
+            int? awayTeamScore = match.score.fullTime.away;
+            int? awayTeamScoreBreak = match.score.halfTime.away;
+            string result = match.score.winner;
+            int leagueID = match.competition.id;
+            DateTime matchDate = match.utcDate;
+            TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
+            DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
+
+            matchDate = polandDateTime;
+
+            return new ( matchID, matchStatus, homeTeamID, homeTeamName, homeTeamCrestURL, homeTeamScore, homeTeamScoreBreak, awayTeamID, awayTeamName, awayTeamCrestURL, awayTeamScore, awayTeamScoreBreak, matchDate, result );
+        }
+
+        public async Task<IActionResult> GetLastMatchesForTeam(GetLastMatchesForTeamRequestDto matchData)
+        {
+            string date300DaysAgo = matchData.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
+            HttpResponseMessage response = await _customHttpClient.GetAsync($"teams/{matchData.TeamID}/matches?status=FINISHED&dateFrom={date300DaysAgo}&dateTo={matchData.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10");
+
+            if(response.IsSuccessStatusCode)
+            {
+                GetLastMatchesForTeamResponseDto responseDto = new()
+                {
+                    TeamID = matchData.TeamID
+                };
+                string content = await response.Content.ReadAsStringAsync();
+                dynamic jsonData = JsonConvert.DeserializeObject(content);
+
+                foreach(var match in jsonData.matches)
+                {
+                    if (responseDto.LastMatches.Count == 5) break;
+                    //Console.WriteLine(match);
+                    string type = match.competition.type;
+                    string stage = match.stage;
+                    if (type != "LEAGUE") continue;
+                    if (stage != "REGULAR_SEASON") continue;
+                    MatchInfoFromApi tmp = await GetMatch(match);
+                    responseDto.LastMatches.Add(new LastMatchesForTeamResponseElement(tmp.MatchID.ToString(), tmp.MatchDate.ToString(), tmp.HomeTeamID.ToString(), tmp.HomeTeamName, tmp.HomeTeamCrestURL, tmp.AwayTeamScore.ToString(), tmp.AwayTeamID.ToString(), tmp.AwayTeamName, tmp.AwayTeamCrestURL, tmp.AwayTeamScore.ToString()));
+                }
+                //responseDto.LastMatches = test;
+                return new OkObjectResult(responseDto);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+            //    if (responseLast5.IsSuccessStatusCode)
+            //    {
+            //        string contentLast = await responseLast5.Content.ReadAsStringAsync();
+            //        dynamic dataLast = JsonConvert.DeserializeObject(contentLast);
+
+            //        //Console.WriteLine(dataLast);
+
+            //        foreach (var match in dataLast.matches)
+            //        {
+            //            if (last5Matches.Count == 5) return;
+            //            //Console.WriteLine(match);
+            //            string type = match.competition.type;
+            //            string stage = match.stage;
+            //            if (type != "LEAGUE") continue;
+            //            if (stage != "REGULAR_SEASON") continue;
+            //            Match tmp = await GetMatch(match);
+            //            last5Matches.Add(tmp.MatchID, tmp);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // Obsługa błędu
+            //        Console.WriteLine($"Error: {responseLast5.StatusCode}");
+            //    }
         }
 
         public async Task<IActionResult> PredictResult(GetMatchesRequestDto matchesData)

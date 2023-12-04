@@ -25,9 +25,16 @@ namespace KickCraze.Api.Controllers
 
         [HttpPost("GetMatchInfo")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetMatchInfo([FromBody] GetMatchInfoRequestDto matchesData)
+        public async Task<IActionResult> GetMatchInfo([FromBody] GetMatchInfoRequestDto matchData)
         {
-            return await _matchService.GetMatchInfo(matchesData);
+            return await _matchService.GetMatchInfo(matchData);
+        }
+
+        [HttpPost("GetLastMatchesForTeam")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLastMatchesForTeam([FromBody] GetLastMatchesForTeamRequestDto matchData)
+        {
+            return await _matchService.GetLastMatchesForTeam(matchData);
         }
 
         [HttpPost("PredictResult")]
