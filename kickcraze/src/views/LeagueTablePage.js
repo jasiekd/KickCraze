@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import LeagueTable from "../components/LeagueTable";
 import "../styles/MainStyle.css";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function LeagueTablePage() {
   const { leagueSeason, leagueID, date } = useParams();
@@ -16,6 +17,7 @@ export default function LeagueTablePage() {
           date={date}
         />
       </main>
+      <Footer />
     </>
   );
 }

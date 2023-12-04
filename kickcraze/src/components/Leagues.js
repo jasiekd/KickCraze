@@ -11,7 +11,7 @@ const override = {
   margin: "0 auto",
 };
 
-export default function Leagues({ setActiveLeagueID }) {
+export default function Leagues({ setActiveLeagueID, isMatchesLoading }) {
   const [isLoading, setIsLoading] = useState(true);
   const [leagueData, setLeagueData] = useState([]);
 
@@ -32,16 +32,22 @@ export default function Leagues({ setActiveLeagueID }) {
   };
 
   const handleTileClick = (id) => {
-    const updatedData = leagueData.map((element) => {
-      setActiveLeagueID(id);
-      if (element.leagueID === id) {
-        return { ...element, active: true };
-      } else {
-        return { ...element, active: false };
-      }
-    });
+    if (isMatchesLoading) {
+      window.alert(
+        "Trwa ładowanie danych. Nie możesz zmieniać ligi w tym czasie."
+      );
+    } else {
+      const updatedData = leagueData.map((element) => {
+        setActiveLeagueID(id);
+        if (element.leagueID === id) {
+          return { ...element, active: true };
+        } else {
+          return { ...element, active: false };
+        }
+      });
 
-    setLeagueData(updatedData);
+      setLeagueData(updatedData);
+    }
   };
 
   return (

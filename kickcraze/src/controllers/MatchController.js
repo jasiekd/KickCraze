@@ -23,3 +23,15 @@ export const GetMatchInfo = async (requestData) => {
     return null;
   }
 };
+
+export const GetLastMatchesForTeam = async (requestData) => {
+  const response = await MatchService.GetLastMatchesForTeam(requestData);
+  if (response === undefined) {
+    return null;
+  }
+  if (response.status === 200) {
+    return response.data;
+  } else if (response.status === 400) {
+    return null;
+  }
+};

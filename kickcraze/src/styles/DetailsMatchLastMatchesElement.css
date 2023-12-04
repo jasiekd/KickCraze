@@ -1,0 +1,36 @@
+.DetailsMatchLastMatchesElement {
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  font-weight: normal;
+  border-top: 1px solid #a2b2ee;
+}
+
+.DetailsMatchLastMatchesElement .date {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  margin-left: 5px;
+}
+.DetailsMatchLastMatchesElement .mainInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.DetailsMatchLastMatchesElement .homeInfo,
+.DetailsMatchLastMatchesElement .awayInfo {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.DetailsMatchLastMatchesElement .homeName,
+.DetailsMatchLastMatchesElement .awayName {
+  flex-direction: row;
+  display: flex;
+  white-space: nowrap;
+}

@@ -22,7 +22,12 @@ export default function DetailsMatchHead({
   isLoading,
 }) {
   return (
-    <div id="detailsMatchHead">
+    <div
+      id="detailsMatchHead"
+      style={
+        isLoading ? { flexDirection: "column", marginBottom: "20px" } : null
+      }
+    >
       {isLoading ? (
         <>
           <HashLoader
@@ -49,7 +54,7 @@ export default function DetailsMatchHead({
               <div>
                 {homeScore}-{awayScore}
               </div>
-              <div style={{ fontSize: 'smaller', color: 'gray' }}>
+              <div style={{ fontSize: "smaller", color: "gray" }}>
                 ({homeScoreBreak}-{awayScoreBreak})
               </div>
             </div>

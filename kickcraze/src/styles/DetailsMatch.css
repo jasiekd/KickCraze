@@ -5,6 +5,7 @@
   min-width: 700px;
   height: fit-content;
   display: grid;
+  margin-bottom: 100px;
 }
 
 #detailsMatch #detailsTitle {
@@ -18,11 +19,13 @@
 }
 
 #detailsMatch #lastMatches {
-margin-top: 20px;
-flex-direction: row;
+  margin-top: 20px;
+  flex-direction: row;
   display: flex;
   align-items: center;
   justify-self: center;
   width: fit-content;
-  
+  min-width: 50vw;
+  margin-bottom: 20px;
+  justify-content: space-between;
 }

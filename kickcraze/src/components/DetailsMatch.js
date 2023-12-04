@@ -19,15 +19,13 @@ export default function DetailsMatch({ id }) {
   const FetchData = async () => {
     setIsLoading(true);
 
-    const data = await GetMatchInfo({matchID: id});
-
+    const data = await GetMatchInfo({ matchID: id });
     if (data !== null) {
       setMatchData(data);
     }
 
     setIsLoading(false);
   };
-
 
   return (
     <div id="detailsMatch">
@@ -44,11 +42,24 @@ export default function DetailsMatch({ id }) {
         awayScoreBreak={matchData.awayTeamScoreBreak}
         isLoading={isLoading}
       />
-      <DetailsMatchPrediction matchID={id}/>
-      <div id="lastMatches">
-        <DetailsMatchLastMatches teamID={1} teamName={matchData.homeName}/>
-        <DetailsMatchLastMatches teamID={2} teamName={matchData.awayName}/>
-      </div>
+
+      {isLoading ? null : (
+        <>
+          <DetailsMatchPrediction matchID={id} />
+          <div id="lastMatches">
+            <DetailsMatchLastMatches
+              teamID={matchData.homeTeamID}
+              teamName={matchData.homeTeamName}
+              date={matchData.matchDate}
+            />
+            <DetailsMatchLastMatches
+              teamID={matchData.awayTeamID}
+              teamName={matchData.awayTeamName}
+              date={matchData.matchDate}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

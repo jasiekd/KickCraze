@@ -22,12 +22,12 @@ body {
 }
 
 .content {
-  width: 95vw;
+  width: fit-content;
   margin: 0 auto;
   margin-top: 1vw;
   flex-direction: row;
   display: flex;
-  min-width: 700px;
+  min-width: 95vw;
 }
 
 .loadingText {

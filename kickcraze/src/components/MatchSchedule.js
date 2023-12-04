@@ -21,9 +21,12 @@ const override = {
   margin: "0 auto",
 };
 
-export default function MatchSchedule({ activeLeagueID }) {
+export default function MatchSchedule({
+  activeLeagueID,
+  isLoading,
+  setIsLoading,
+}) {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isLoading, setIsLoading] = useState(true);
   const [matchesData, setMatchesData] = useState([]);
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
@@ -48,7 +51,13 @@ export default function MatchSchedule({ activeLeagueID }) {
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    if (isLoading) {
+      window.alert(
+        "Trwa ładowanie danych. Nie możesz zmieniać daty w tym czasie."
+      );
+    } else {
+      setSelectedDate(date);
+    }
   };
 
   const formatDate = (date) => {
