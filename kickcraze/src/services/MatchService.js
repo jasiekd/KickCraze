@@ -46,4 +46,17 @@ export default class MatchService {
       return error.response;
     }
   }
+  static async PredictResult(requestData) {
+    try {
+      const response = await axios.post(
+        backendHostname + "Match/PredictResult",
+        {
+          matchID: requestData.matchID,
+        }
+      );
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  }
 }

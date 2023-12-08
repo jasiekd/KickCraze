@@ -25,7 +25,7 @@ export default function DetailsMatchHead({
     <div
       id="detailsMatchHead"
       style={
-        isLoading ? { flexDirection: "column", marginBottom: "20px" } : null
+        isLoading || date === undefined ? { flexDirection: "column", marginBottom: "20px" } : null
       }
     >
       {isLoading ? (
@@ -40,6 +40,8 @@ export default function DetailsMatchHead({
           />
           <div className="loadingText">Ładowanie szczegółów meczu</div>
         </>
+      ) : date === undefined ? (
+        <div className="loadingText">Błąd przy pobieraniu szczegółów meczu</div>
       ) : (
         <>
           <div className="teamInfo">

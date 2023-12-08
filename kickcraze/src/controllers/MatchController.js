@@ -35,3 +35,16 @@ export const GetLastMatchesForTeam = async (requestData) => {
     return null;
   }
 };
+
+export const PredictResult = async (requestData) => {
+  const response = await MatchService.PredictResult(requestData);
+  if (response === undefined) {
+    return null;
+  }
+  if (response.status === 200) {
+    return response.data;
+  } else if (response.status === 400) {
+    return null;
+  }
+};
+

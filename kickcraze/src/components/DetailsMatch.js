@@ -43,7 +43,7 @@ export default function DetailsMatch({ id }) {
         isLoading={isLoading}
       />
 
-      {isLoading ? null : (
+      {isLoading ? null : matchData.matchDate === undefined ? null : (
         <>
           <DetailsMatchPrediction matchID={id} />
           <div id="lastMatches">
