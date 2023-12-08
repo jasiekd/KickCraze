@@ -1,6 +1,9 @@
 using KickCraze.Api.Data;
 using KickCraze.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.ML;
+using KickCraze.Api.Model;
 
 namespace KickCraze.Api
 {
@@ -12,7 +15,9 @@ namespace KickCraze.Api
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddPredictionEnginePool<FootballMatchData, MatchPrediction>()
+            .FromFile(modelName: "ResultMatchPrediction", filePath: "C:\\Users\\Johny\\source\\repos\\KickCraze\\KickCraze.Api\\Model\\MatchResultModel.zip", watchForChanges: true);
+
             builder.Services.AddCors(options => {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                   policy => {
@@ -34,7 +39,10 @@ namespace KickCraze.Api
             });
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API KickCraze", Description = "Endpoints for my API", Version = "v1" });
+            });
 
             builder.Services.AddSingleton(provider =>
             {

@@ -3,7 +3,7 @@
     public class LastMatchesForTeamResponseElement
     {
         public string MatchID { get; set; }
-        public string MatchDate { get; set; }
+        public DateTime MatchDate { get; set; }
         public string HomeTeamID { get; set; }
         public string HomeTeamName { get; set; }
         public string HomeTeamCrestURL { get; set; }
@@ -12,7 +12,7 @@
         public string AwayTeamName { get; set; }
         public string AwayTeamCrestURL { get; set; }
         public string AwayTeamScore { get; set; }
-        public LastMatchesForTeamResponseElement(string matchID, string matchDate, string homeTeamID, string homeTeamName, string homeTeamCrestURL, string homeTeamScore, string awayTeamID, string awayTeamName, string awayTeamCrestURL, string awayTeamScore)
+        public LastMatchesForTeamResponseElement(string matchID, DateTime matchDate, string homeTeamID, string homeTeamName, string homeTeamCrestURL, string homeTeamScore, string awayTeamID, string awayTeamName, string awayTeamCrestURL, string awayTeamScore)
         {
             MatchID = matchID;
             MatchDate = matchDate;

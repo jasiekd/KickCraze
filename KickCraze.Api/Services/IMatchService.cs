@@ -8,6 +8,6 @@ namespace KickCraze.Api.Services
         Task<IActionResult> GetMatches(GetMatchesRequestDto matchesData);
         Task<IActionResult> GetMatchInfo(GetMatchInfoRequestDto matchData);
         Task<IActionResult> GetLastMatchesForTeam(GetLastMatchesForTeamRequestDto matchData);
-        Task<IActionResult> PredictResult(GetMatchesRequestDto matchesData);
+        Task<IActionResult> PredictResult(PredictResultRequestDto predictResultRequest);
     }
 }

@@ -39,9 +39,9 @@ namespace KickCraze.Api.Controllers
 
         [HttpPost("PredictResult")]
         [AllowAnonymous]
-        public async Task<IActionResult> PredictResult([FromBody] GetMatchesRequestDto matchesData)
+        public async Task<IActionResult> PredictResult([FromBody] PredictResultRequestDto predictResultRequest)
         {
-            return await _matchService.PredictResult(matchesData);
+            return await _matchService.PredictResult(predictResultRequest);
         }
     }
 }
