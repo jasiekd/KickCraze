@@ -102,7 +102,7 @@ export default function MatchSchedule({
         <div className="loadingText">Brak meczy przy aktualnych filtrach</div>
       ) : (
         matchesData.map((league) => (
-          <div key={league.leagueID}>
+          <div className="matches" key={league.leagueID}>
             <MatchScheduleTitle
               key={league.leagueID}
               id={league.leagueID}

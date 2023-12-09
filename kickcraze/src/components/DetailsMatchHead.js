@@ -53,10 +53,10 @@ export default function DetailsMatchHead({
           <div id="gameInfo">
             <div id="date">{date}</div>
             <div id="score">
-              <div>
+              <div >
                 {homeScore}-{awayScore}
               </div>
-              <div style={{ fontSize: "smaller", color: "gray" }}>
+              <div title="Wynik w połowie meczu" style={{ fontSize: "smaller", color: "gray" }}>
                 ({homeScoreBreak}-{awayScoreBreak})
               </div>
             </div>

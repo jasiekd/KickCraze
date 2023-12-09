@@ -9,7 +9,7 @@ export default function DetailsMatchLastMatchesElement({ match }) {
   const [year,month,day] = matchDate.split("-");
 
   return (
-    <div className="DetailsMatchLastMatchesElement">
+    <div className="DetailsMatchLastMatchesElement" >
       <div className="date">{day}.{month}.{year}</div>
       <div className="mainInfo">
         <div className="homeInfo">

@@ -5,6 +5,9 @@
   transition: background-color 0.3s;
   font-size: 18px;
   align-items: center;
+  width: fit-content;
+  min-width: 100%;
+  gap: 5px;
 }
 .leagueI:hover {
   background-color: #40464f;
@@ -21,7 +24,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  min-width: 22px;
+  width: fit-content;
   text-wrap: nowrap;
 }
 .leagueI .mainInfo {
@@ -39,6 +42,7 @@
   justify-content: space-between;
   margin-top: 1vh;
   margin-bottom: 1vh;
+  white-space: nowrap;
 }
 .leagueI .homeName,
 .leagueI .awayName {
