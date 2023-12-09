@@ -5,6 +5,8 @@ using Microsoft.Extensions.ML;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
@@ -155,7 +157,7 @@ namespace KickCraze.Api.Services
 
             return new ( matchID, matchStatus, homeTeamID, homeTeamName, homeTeamCrestURL, homeTeamScore, homeTeamScoreBreak, awayTeamID, awayTeamName, awayTeamCrestURL, awayTeamScore, awayTeamScoreBreak, matchDate, result );
         }
-        private async Task<MatchInfoFromApiToPrediction> GetMatchInfoFromApiToPrediction(dynamic match)
+        private async Task<MatchInfoFromApiToPrediction> GetMatchInfoFromApiToPrediction(dynamic match, Dictionary<(string, int, int), dynamic> leagueTables)
         {
             int matchID = match.id;
             string matchStatus = match.status;
@@ -175,15 +177,15 @@ namespace KickCraze.Api.Services
             TimeZoneInfo polandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw");
             DateTime polandDateTime = TimeZoneInfo.ConvertTimeFromUtc(matchDate, polandTimeZone);
 
-            var teamsPositionsBefore = await GetPositions(homeTeamID, awayTeamID, startDate[..4], matchDay, leagueID);
-            var teamsPositionsAfter = await GetPositions(homeTeamID, awayTeamID, startDate[..4], matchDay + 1, leagueID);
+            var teamsPositionsBefore = await GetPositions(homeTeamID, awayTeamID, startDate[..4], matchDay, leagueID, leagueTables);
+            var teamsPositionsAfter = await GetPositions(homeTeamID, awayTeamID, startDate[..4], matchDay + 1, leagueID, leagueTables);
 
             matchDate = polandDateTime;
 
             return new(matchID, leagueID, matchStatus, homeTeamID, homeTeamName, teamsPositionsBefore.HomeTeamGoalDiff, teamsPositionsAfter.HomeTeamGoalDiff, teamsPositionsBefore.HomeTeamPosition, teamsPositionsAfter.HomeTeamPosition, homeTeamScore, homeTeamScoreBreak, awayTeamID, awayTeamName, teamsPositionsBefore.AwayTeamGoalDiff, teamsPositionsAfter.AwayTeamGoalDiff, teamsPositionsBefore.AwayTeamPosition, teamsPositionsAfter.AwayTeamPosition, awayTeamScore, awayTeamScoreBreak, matchDate, result);
         }
 
-        async Task<TeamPositions?> GetPositions(int homeTeamID, int awayTeamID, string season, int matchDay, int leagueID)
+        async Task<TeamPositions?> GetPositions(int homeTeamID, int awayTeamID, string season, int matchDay, int leagueID, Dictionary<(string, int, int), dynamic> leagueTables)
         {
             int homeTeamPosition = 0;
             int awayTeamPosition = 0;
@@ -203,12 +205,12 @@ namespace KickCraze.Api.Services
 
             dynamic standings = null;
 
-            //if (leagueTables.ContainsKey((season, matchDay - 1, leagueID)))
-            //{
-            //    standings = leagueTables.GetValueOrDefault((season, matchDay - 1, leagueID));
-            //}
-            //else
-            //{
+            if (leagueTables.ContainsKey((season, matchDay - 1, leagueID)))
+            {
+                standings = leagueTables.GetValueOrDefault((season, matchDay - 1, leagueID));
+            }
+            else
+            {
                 string linkTable = $"https://api.football-data.org/v4/competitions/{leagueID}/standings/?season={season}&matchday={matchDay - 1}";  //tabela ligi
                 HttpResponseMessage responseTable = await _customHttpClient.GetAsync(linkTable);
                 if (responseTable.IsSuccessStatusCode)
@@ -216,7 +218,7 @@ namespace KickCraze.Api.Services
                     string contentTable = await responseTable.Content.ReadAsStringAsync();
                     dynamic jsonData = JsonConvert.DeserializeObject(contentTable);
                     standings = jsonData.standings;
-                    //leagueTables.Add((season, matchDay - 1, leagueID), standings);
+                    leagueTables.Add((season, matchDay - 1, leagueID), standings);
                 }
                 else
                 {
@@ -224,7 +226,7 @@ namespace KickCraze.Api.Services
                     Console.WriteLine($"Error: {responseTable.StatusCode}");
                     return null;
                 }
-            //}
+            }
 
             //Console.WriteLine(standings);
             if (standings != null && standings.Count > 0)
@@ -263,7 +265,7 @@ namespace KickCraze.Api.Services
             };
         }
 
-        private async Task GetLast5MatchesToPredictAsync(Dictionary<int, MatchInfoFromApiToPrediction> last5Matches, string last5URL)
+        private async Task GetLast5MatchesToPredictAsync(Dictionary<int, MatchInfoFromApiToPrediction> last5Matches, string last5URL, Dictionary<(string, int, int), dynamic> leagueTables)
         {
             HttpResponseMessage responseLast5 = await _customHttpClient.GetAsync(last5URL);
             if (responseLast5.IsSuccessStatusCode)
@@ -281,7 +283,7 @@ namespace KickCraze.Api.Services
                     string stage = dataLast.matches[i].stage;
                     if (type != "LEAGUE") continue;
                     if (stage != "REGULAR_SEASON") continue;
-                    MatchInfoFromApiToPrediction tmp = await GetMatchInfoFromApiToPrediction(dataLast.matches[i]);
+                    MatchInfoFromApiToPrediction tmp = await GetMatchInfoFromApiToPrediction(dataLast.matches[i], leagueTables);
                     last5Matches.Add(tmp.MatchID, tmp);
                 }
 
@@ -394,17 +396,19 @@ namespace KickCraze.Api.Services
             {
                 string content = await response.Content.ReadAsStringAsync();
                 dynamic jsonData = JsonConvert.DeserializeObject(content);
+                Dictionary<(string, int, int), dynamic> leagueTables = new();
 
-                MatchInfoFromApiToPrediction mainMatch = await GetMatchInfoFromApiToPrediction(jsonData);
+                MatchInfoFromApiToPrediction mainMatch = await GetMatchInfoFromApiToPrediction(jsonData, leagueTables);
                 string date300DaysAgoFromMatchDate = mainMatch.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
                 string homeLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.HomeTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
                 string awayLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.AwayTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
                 Dictionary<int, MatchInfoFromApiToPrediction> homeLast5Matches = new();
                 Dictionary<int, MatchInfoFromApiToPrediction> awayLast5Matches = new();
+                
 
-                await GetLast5MatchesToPredictAsync(homeLast5Matches, homeLast5URL);
+                await GetLast5MatchesToPredictAsync(homeLast5Matches, homeLast5URL, leagueTables);
 
-                await GetLast5MatchesToPredictAsync(awayLast5Matches, awayLast5URL);
+                await GetLast5MatchesToPredictAsync(awayLast5Matches, awayLast5URL, leagueTables);
 
                 FootballMatchData matchData = await MatchesDataToFootballMatchData(mainMatch, homeLast5Matches, awayLast5Matches);
 
