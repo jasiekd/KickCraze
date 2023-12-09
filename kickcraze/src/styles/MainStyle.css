@@ -1,7 +1,7 @@
 .App {
   background-color: #121212;
   height: 99vh;
-  width: 100vw;
+  width: 99vw;
   margin: 0;
   padding: 0;
   color: white;
@@ -24,10 +24,18 @@ body {
 .content {
   width: fit-content;
   margin: 0 auto;
+  flex-direction: column;
+  display: flex;
+  min-width: 95vw;
+  gap: 10px;
+}
+.content2 {
+  width: 100%;
+  margin: 0 auto;
   margin-top: 1vw;
   flex-direction: row;
   display: flex;
-  min-width: 95vw;
+  gap: 5px;
 }
 
 .loadingText {
@@ -38,4 +46,5 @@ body {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
+  white-space: "nowrap";
 }

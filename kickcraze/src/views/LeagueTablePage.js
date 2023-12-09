@@ -9,13 +9,15 @@ export default function LeagueTablePage() {
   const { leagueSeason, leagueID, date } = useParams();
   return (
     <>
-      <Header />
       <main className="content">
-        <LeagueTable
-          leagueSeason={leagueSeason}
-          leagueID={leagueID}
-          date={date}
-        />
+        <Header />
+        <div className="content2">
+          <LeagueTable
+            leagueSeason={leagueSeason}
+            leagueID={leagueID}
+            date={date}
+          />
+        </div>
       </main>
       <Footer />
     </>

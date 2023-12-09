@@ -4,6 +4,7 @@ import SmallTeamLogo from "./SmallTeamLogo";
 import "../styles/MainStyle.css";
 
 export default function DetailsMatchLastMatchesElement({ match }) {
+  // eslint-disable-next-line
   const [matchDate, matchTime] = match.matchDate.split("T");
   const [year,month,day] = matchDate.split("-");
 

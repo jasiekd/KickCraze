@@ -42,7 +42,7 @@ export default function MatchSchedule({
       leagueID: activeLeagueID,
       date: selectedDate,
     });
-    console.log(data);
+    //console.log(data);
     if (data !== null) {
       setMatchesData(data);
     }
@@ -102,7 +102,7 @@ export default function MatchSchedule({
         <div className="loadingText">Brak meczy przy aktualnych filtrach</div>
       ) : (
         matchesData.map((league) => (
-          <>
+          <div key={league.leagueID}>
             <MatchScheduleTitle
               key={league.leagueID}
               id={league.leagueID}
@@ -113,7 +113,7 @@ export default function MatchSchedule({
             {league.matches.map((match) => (
               <MatchScheduleInfo key={match.matchID} match={match} />
             ))}
-          </>
+          </div>
         ))
       )}
     </div>

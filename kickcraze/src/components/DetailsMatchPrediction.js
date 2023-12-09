@@ -49,7 +49,7 @@ export default function DetailsMatchPrediction({ matchID }) {
         </div>
       ) : (
         <>
-          <h2>Przewidywany rezultat meczu</h2>
+          <h2 style={{whiteSpace: "nowrap",}}>Przewidywany rezultat meczu</h2>
           <div id="predictChart">
             {predictionData.map((item) => (
               <div
@@ -78,6 +78,7 @@ export default function DetailsMatchPrediction({ matchID }) {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
+                  whiteSpace: "nowrap",
                 }}
                 key={item.key}
               >
@@ -87,6 +88,7 @@ export default function DetailsMatchPrediction({ matchID }) {
                     width: 15,
                     backgroundColor: `${item.color}`,
                     marginRight: 5,
+                    whiteSpace: "nowrap",
                   }}
                 ></div>
                 <div>

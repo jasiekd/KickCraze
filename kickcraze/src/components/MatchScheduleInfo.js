@@ -9,7 +9,7 @@ export default function MatchScheduleInfo({ match }) {
   const dateObject = new Date(match.matchDate);
   const hours = dateObject.getHours();
   const minutes = dateObject.getMinutes();
-  console.log(match)
+  //console.log(match)
   return (
     <div
       className="leagueI"

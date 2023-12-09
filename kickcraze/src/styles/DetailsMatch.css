@@ -6,6 +6,15 @@
   height: fit-content;
   display: grid;
   margin-bottom: 100px;
+  align-items: center;
+}
+
+#detailsMatch #detailsContent{
+  width: max-content;
+  justify-self: center;
+  min-width: 50vw;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #detailsMatch #detailsTitle {
@@ -18,14 +27,23 @@
   margin-left: 30px;
 }
 
+#detailsMatch #prediction {
+  margin-top: 20px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
 #detailsMatch #lastMatches {
   margin-top: 20px;
   flex-direction: row;
   display: flex;
   align-items: center;
-  justify-self: center;
-  width: fit-content;
-  min-width: 50vw;
+  width: 100%;
   margin-bottom: 20px;
   justify-content: space-between;
+  gap: 10px;
 }
+

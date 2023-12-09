@@ -12,17 +12,19 @@ export default function MainPage() {
 
   return (
     <>
-      <Header />
       <main className="content">
-        <Leagues
-          setActiveLeagueID={setActiveLeagueID}
-          isMatchesLoading={isMatchesLoading}
-        />
-        <MatchSchedule
-          activeLeagueID={activeLeagueID}
-          isLoading={isMatchesLoading}
-          setIsLoading={setIsMatchesLoading}
-        />
+        <Header />
+        <div className="content2">
+          <Leagues
+            setActiveLeagueID={setActiveLeagueID}
+            isMatchesLoading={isMatchesLoading}
+          />
+          <MatchSchedule
+            activeLeagueID={activeLeagueID}
+            isLoading={isMatchesLoading}
+            setIsLoading={setIsMatchesLoading}
+          />
+        </div>
       </main>
       <Footer />
     </>

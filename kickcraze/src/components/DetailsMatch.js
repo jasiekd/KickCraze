@@ -30,36 +30,41 @@ export default function DetailsMatch({ id }) {
   return (
     <div id="detailsMatch">
       <div id="detailsTitle">Szczegóły meczu</div>
-      <DetailsMatchHead
-        date={matchData.matchDate}
-        homeImage={matchData.homeTeamCrestURL}
-        homeName={matchData.homeTeamName}
-        homeScore={matchData.homeTeamScore}
-        homeScoreBreak={matchData.homeTeamScoreBreak}
-        awayImage={matchData.awayTeamCrestURL}
-        awayName={matchData.awayTeamName}
-        awayScore={matchData.awayTeamScore}
-        awayScoreBreak={matchData.awayTeamScoreBreak}
-        isLoading={isLoading}
-      />
+      <div id="detailsContent">
+        <DetailsMatchHead
+          date={matchData.matchDate}
+          homeImage={matchData.homeTeamCrestURL}
+          homeName={matchData.homeTeamName}
+          homeScore={matchData.homeTeamScore}
+          homeScoreBreak={matchData.homeTeamScoreBreak}
+          awayImage={matchData.awayTeamCrestURL}
+          awayName={matchData.awayTeamName}
+          awayScore={matchData.awayTeamScore}
+          awayScoreBreak={matchData.awayTeamScoreBreak}
+          isLoading={isLoading}
+        />
 
-      {isLoading ? null : matchData.matchDate === undefined ? null : (
-        <>
-          <DetailsMatchPrediction matchID={id} />
-          <div id="lastMatches">
-            <DetailsMatchLastMatches
-              teamID={matchData.homeTeamID}
-              teamName={matchData.homeTeamName}
-              date={matchData.matchDate}
-            />
-            <DetailsMatchLastMatches
-              teamID={matchData.awayTeamID}
-              teamName={matchData.awayTeamName}
-              date={matchData.matchDate}
-            />
-          </div>
-        </>
-      )}
+        {isLoading ? null : matchData.matchDate === undefined ? null : (
+          <>
+            <div id="prediction">
+              <DetailsMatchPrediction matchID={id} />
+            </div>
+
+            <div id="lastMatches">
+              <DetailsMatchLastMatches
+                teamID={matchData.homeTeamID}
+                teamName={matchData.homeTeamName}
+                date={matchData.matchDate}
+              />
+              <DetailsMatchLastMatches
+                teamID={matchData.awayTeamID}
+                teamName={matchData.awayTeamName}
+                date={matchData.matchDate}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

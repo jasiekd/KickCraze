@@ -34,7 +34,8 @@ export default function DetailsMatchLastMatches({ teamID, teamName, date }) {
 
   return (
     <div className="DetailsMatchLastMatches">
-      Ostatnie mecze: {teamName}
+      <div className="lastMatchesHeader">Ostatnie mecze: {teamName}</div>
+
       {isLoading ? (
         <>
           <HashLoader

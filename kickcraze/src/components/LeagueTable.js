@@ -28,7 +28,7 @@ export default function LeagueTable({ leagueSeason, leagueID, date }) {
       leagueSeason: leagueSeason,
       date: date,
     });
-    console.log(data);
+    //console.log(data);
     if (data !== null) {
       setLeagueTableData(data);
     }

@@ -9,9 +9,11 @@ export default function DetailsMatchPage() {
   const { id } = useParams();
   return (
     <>
-      <Header />
       <main className="content">
-        <DetailsMatch id={id} />
+        <Header />
+        <div className="content2">
+          <DetailsMatch id={id} />
+        </div>
       </main>
       <Footer />
     </>
