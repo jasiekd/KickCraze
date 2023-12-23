@@ -5,6 +5,7 @@ import "../styles/MainStyle.css";
 import DetailsMatchLastMatchesElement from "./DetailsMatchLastMatchesElement";
 import { GetLastMatchesForTeam } from "../controllers/MatchController";
 import { HashLoader } from "react-spinners";
+import GoalsChart from "./GoalsChart";
 
 const override = {
   display: "block",
@@ -51,9 +52,12 @@ export default function DetailsMatchLastMatches({ teamID, teamName, date }) {
       ) : Object.keys(lastMatchesData).length === 0 ? (
         <div className="loadingText">Błąd przy pobieraniu ostatnich meczów</div>
       ) : (
-        lastMatchesData.lastMatches.map((match) => (
-          <DetailsMatchLastMatchesElement key={match.matchID} match={match} />
-        ))
+        <>
+          {lastMatchesData.lastMatches.map((match) => (
+            <DetailsMatchLastMatchesElement key={match.matchID} match={match} />
+          ))}
+          <GoalsChart data={lastMatchesData.lastMatches} teamID={teamID} teamName={teamName} />
+        </>
       )}
     </div>
   );

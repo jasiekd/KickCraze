@@ -34,3 +34,6 @@
   display: flex;
   white-space: nowrap;
 }
+.DetailsMatchLastMatchesElement .homeName{
+  margin-right: 10px;
+}

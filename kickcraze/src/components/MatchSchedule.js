@@ -12,6 +12,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import pl from "date-fns/locale/pl";
 import { GetMatches } from "../controllers/MatchController";
 import { HashLoader } from "react-spinners";
+import { CiCalendarDate } from "react-icons/ci";
 
 registerLocale("pl", pl);
 setDefaultLocale("pl");
@@ -31,6 +32,7 @@ export default function MatchSchedule({
 
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
     <div id="date" onClick={onClick} ref={ref}>
+      <CiCalendarDate />
       {value}
     </div>
   ));
