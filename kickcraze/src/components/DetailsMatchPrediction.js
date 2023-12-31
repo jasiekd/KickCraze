@@ -91,7 +91,7 @@ export default function DetailsMatchPrediction({ matchID }) {
                     whiteSpace: "nowrap",
                   }}
                 ></div>
-                <div>
+                <div title= {item.predictedLabel ? "Przewidziany rezultat" : null} id={item.predictedLabel ? "predictedLabel" : null}>
                   {item.key} {item.value}%
                 </div>
               </div>

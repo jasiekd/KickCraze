@@ -12,9 +12,7 @@
 #detailsMatch #detailsContent{
   width: max-content;
   justify-self: center;
-  min-width: 50vw;
-  margin-left: 10px;
-  margin-right: 10px;
+  min-width: 60vw;
 }
 
 #detailsMatch #detailsTitle {
