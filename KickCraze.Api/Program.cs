@@ -15,8 +15,12 @@ namespace KickCraze.Api
 
             var builder = WebApplication.CreateBuilder(args);
 
+            string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
+            string filePath = Path.GetFullPath(Path.Combine(currentDirectory, "..\\..\\..\\Model\\MatchResultModel.zip"));
+
             builder.Services.AddPredictionEnginePool<FootballMatchData, MatchPrediction>()
-            .FromFile(modelName: "ResultMatchPrediction", filePath: "C:\\Users\\Johny\\source\\repos\\KickCraze\\KickCraze.Api\\Model\\MatchResultModel.zip", watchForChanges: true);
+            .FromFile(modelName: "ResultMatchPrediction", filePath: filePath, watchForChanges: true);
 
             builder.Services.AddCors(options => {
                 options.AddPolicy(name: MyAllowSpecificOrigins,

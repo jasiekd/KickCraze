@@ -416,11 +416,12 @@ namespace KickCraze.Api.Services
 
                 var sortedScoresWithLabel = GetSortedScoresWithLabels(result);
 
+                
                 List<PredictResultResponseDto> predictResults = new()
                 {
-                    new() { Key = mainMatch.HomeTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "HOME_TEAM").Value * 100), Color = "#28a745" },
-                    new() { Key = "Remis", Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "DRAW").Value * 100) , Color = "#6c757d" },
-                    new() { Key = mainMatch.AwayTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "AWAY_TEAM").Value * 100), Color = "#dc3545" }
+                    new() { Key = mainMatch.HomeTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "HOME_TEAM").Value * 100), Color = "#28a745", PredictedLabel = "HOME_TEAM".Equals(result.PredictedLabel) },
+                    new() { Key = "Remis", Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "DRAW").Value * 100) , Color = "#6c757d", PredictedLabel = "DRAW".Equals(result.PredictedLabel) },
+                    new() { Key = mainMatch.AwayTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "AWAY_TEAM").Value * 100), Color = "#dc3545", PredictedLabel = "AWAY_TEAM".Equals(result.PredictedLabel) }
                 };
 
 

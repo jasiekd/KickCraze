@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KickCraze.Api", "KickCraze.Api\KickCraze.Api.csproj", "{BF9A1A42-0053-4089-B372-B1D54D68775B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KickCraze.Api", "KickCraze.Api\KickCraze.Api.csproj", "{BF9A1A42-0053-4089-B372-B1D54D68775B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingModel", "TrainingModel\TrainingModel.csproj", "{A44AC6B6-621E-4164-908B-2F7282D0577B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FetchData", "FetchData\FetchData.csproj", "{1C1BDDB9-D24F-4B5B-82FE-4027D60DC3AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF9A1A42-0053-4089-B372-B1D54D68775B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44AC6B6-621E-4164-908B-2F7282D0577B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44AC6B6-621E-4164-908B-2F7282D0577B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44AC6B6-621E-4164-908B-2F7282D0577B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44AC6B6-621E-4164-908B-2F7282D0577B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C1BDDB9-D24F-4B5B-82FE-4027D60DC3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1BDDB9-D24F-4B5B-82FE-4027D60DC3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1BDDB9-D24F-4B5B-82FE-4027D60DC3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1BDDB9-D24F-4B5B-82FE-4027D60DC3AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
