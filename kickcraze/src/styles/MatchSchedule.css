@@ -34,6 +34,7 @@ flex-direction: column;
 #matchSchedule #date {
   margin-left: 5px;
   color: #afafaf;
+  text-wrap: nowrap;
 }
 
 #matchSchedule #date:hover {
