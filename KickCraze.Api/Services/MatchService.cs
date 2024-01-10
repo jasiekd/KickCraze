@@ -211,7 +211,7 @@ namespace KickCraze.Api.Services
             }
             else
             {
-                string linkTable = $"https://api.football-data.org/v4/competitions/{leagueID}/standings/?season={season}&matchday={matchDay - 1}";  //tabela ligi
+                string linkTable = $"competitions/{leagueID}/standings/?season={season}&matchday={matchDay - 1}";
                 HttpResponseMessage responseTable = await _customHttpClient.GetAsync(linkTable);
                 if (responseTable.IsSuccessStatusCode)
                 {
@@ -222,7 +222,6 @@ namespace KickCraze.Api.Services
                 }
                 else
                 {
-                    // Obsługa błędu
                     Console.WriteLine($"Error: {responseTable.StatusCode}");
                     return null;
                 }
@@ -295,7 +294,6 @@ namespace KickCraze.Api.Services
             }
             else
             {
-                // Obsługa błędu
                 Console.WriteLine($"Error: {responseLast5.StatusCode}");
             }
         }
@@ -306,13 +304,10 @@ namespace KickCraze.Api.Services
         {
             var footballMatchData = new FootballMatchData();
 
-            // Map data for the main match
             MapMatchData(mainMatch, footballMatchData);
 
-            // Map data for home team's last 5 matches
             MapLastMatchesData(homeLast5Matches, footballMatchData, isHomeTeam: true);
 
-            // Map data for away team's last 5 matches
             MapLastMatchesData(awayLast5Matches, footballMatchData, isHomeTeam: false);
 
             return footballMatchData;
@@ -339,10 +334,8 @@ namespace KickCraze.Api.Services
 
         private static void MapLastMatchData(MatchInfoFromApiToPrediction lastMatch, FootballMatchData footballMatchData, int matchNumber, bool isHomeTeam)
         {
-            // Determine the prefix for the properties based on whether it's the home or away team
             string prefix = isHomeTeam ? $"H{matchNumber}" : $"A{matchNumber}";
 
-            // Map the data for the specific past match
             footballMatchData.GetType().GetProperty($"{prefix}LastHomeTeamGoalDiffBef")?.SetValue(footballMatchData, lastMatch.HomeTeamGoalDiffBefore);
             footballMatchData.GetType().GetProperty($"{prefix}LastHomeTeamGoalDiffAft")?.SetValue(footballMatchData, lastMatch.HomeTeamGoalDiffAfter);
             footballMatchData.GetType().GetProperty($"{prefix}LastHomeTeamPosBef")?.SetValue(footballMatchData, lastMatch.HomeTeamPositionBefore);
@@ -373,17 +366,16 @@ namespace KickCraze.Api.Services
             return keyNames.DenseValues().Select(x => x.ToString());
         }
 
-        public IOrderedEnumerable<KeyValuePair<string, float>> GetSortedScoresWithLabels(MatchPrediction result)
+        public IOrderedEnumerable<KeyValuePair<string, int>> GetSortedScoresWithLabels(MatchPrediction result)
         {
             var unlabeledScores = result.Score;
             var labelNames = GetLabels();
 
-            Dictionary<string, float> labledScores = new Dictionary<string, float>();
+            Dictionary<string, int> labledScores = new Dictionary<string, int>();
             for (int i = 0; i < labelNames.Count(); i++)
             {
-                // Map the names to the predicted result score array
                 var labelName = labelNames.ElementAt(i);
-                labledScores.Add(labelName.ToString(), unlabeledScores[i]);
+                labledScores.Add(labelName.ToString(), (int)Math.Round(unlabeledScores[i] * 100));
             }
 
             return labledScores.OrderByDescending(c => c.Value);
@@ -400,11 +392,10 @@ namespace KickCraze.Api.Services
 
                 MatchInfoFromApiToPrediction mainMatch = await GetMatchInfoFromApiToPrediction(jsonData, leagueTables);
                 string date300DaysAgoFromMatchDate = mainMatch.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
-                string homeLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.HomeTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
-                string awayLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.AwayTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
+                string homeLast5URL = $"teams/{mainMatch.HomeTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
+                string awayLast5URL = $"teams/{mainMatch.AwayTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgoFromMatchDate}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={mainMatch.LeagueID}";
                 Dictionary<int, MatchInfoFromApiToPrediction> homeLast5Matches = new();
-                Dictionary<int, MatchInfoFromApiToPrediction> awayLast5Matches = new();
-                
+                Dictionary<int, MatchInfoFromApiToPrediction> awayLast5Matches = new(); 
 
                 await GetLast5MatchesToPredictAsync(homeLast5Matches, homeLast5URL, leagueTables);
 
@@ -416,14 +407,28 @@ namespace KickCraze.Api.Services
 
                 var sortedScoresWithLabel = GetSortedScoresWithLabels(result);
 
-                
+                int score = 0;
+
+                foreach(var pair in sortedScoresWithLabel)
+                {
+                    score += pair.Value;
+                }
+                bool notFullMatch = false;
+
+                if (score < 100) {
+                    notFullMatch = true;
+                }
+                else
+                {
+                    notFullMatch = false;
+                } 
+
                 List<PredictResultResponseDto> predictResults = new()
                 {
-                    new() { Key = mainMatch.HomeTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "HOME_TEAM").Value * 100), Color = "#28a745", PredictedLabel = "HOME_TEAM".Equals(result.PredictedLabel) },
-                    new() { Key = "Remis", Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "DRAW").Value * 100) , Color = "#6c757d", PredictedLabel = "DRAW".Equals(result.PredictedLabel) },
-                    new() { Key = mainMatch.AwayTeamName, Value = (int)Math.Round(sortedScoresWithLabel.First(x => x.Key == "AWAY_TEAM").Value * 100), Color = "#dc3545", PredictedLabel = "AWAY_TEAM".Equals(result.PredictedLabel) }
+                    new() { Key = mainMatch.HomeTeamName, Value = sortedScoresWithLabel.First(x => x.Key == "HOME_TEAM").Value + (notFullMatch && "HOME_TEAM".Equals(result.PredictedLabel) ? 1 : 0), Color = "#28a745", PredictedLabel = "HOME_TEAM".Equals(result.PredictedLabel) },
+                    new() { Key = "Remis", Value = sortedScoresWithLabel.First(x => x.Key == "DRAW").Value + (notFullMatch && "DRAW".Equals(result.PredictedLabel) ? 1 : 0), Color = "#6c757d", PredictedLabel = "DRAW".Equals(result.PredictedLabel) },
+                    new() { Key = mainMatch.AwayTeamName, Value = sortedScoresWithLabel.First(x => x.Key == "AWAY_TEAM").Value + (notFullMatch && "AWAY_TEAM".Equals(result.PredictedLabel) ? 1 : 0), Color = "#dc3545", PredictedLabel = "AWAY_TEAM".Equals(result.PredictedLabel) }
                 };
-
 
                 return new OkObjectResult(predictResults);
             }
@@ -448,7 +453,6 @@ namespace KickCraze.Api.Services
                 dynamic jsonData = JsonConvert.DeserializeObject(content);
 
                 for(int i = jsonData.matches.Count - 1; i >= 0;i--)
-                //foreach (var match in jsonData.matches)
                 {
                     if (responseDto.LastMatches.Count == 5) break;
                     string type = jsonData.matches[i].competition.type;
@@ -458,8 +462,6 @@ namespace KickCraze.Api.Services
                     MatchInfoFromApi tmp = await GetMatchInfoFromApi(jsonData.matches[i]);
                     responseDto.LastMatches.Add(new LastMatchesForTeamResponseElement(tmp.MatchID.ToString(), tmp.MatchDate, tmp.HomeTeamID.ToString(), tmp.HomeTeamName, tmp.HomeTeamCrestURL, tmp.HomeTeamScore.ToString(), tmp.AwayTeamID.ToString(), tmp.AwayTeamName, tmp.AwayTeamCrestURL, tmp.AwayTeamScore.ToString()));
                 }
-
-                //responseDto.LastMatches = responseDto.LastMatches.AsQueryable().OrderByDescending(x => x.MatchDate).ToList();
 
                 return new OkObjectResult(responseDto);
             }

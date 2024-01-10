@@ -10,7 +10,6 @@
         }
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            //request.Headers.Add("X-Auth-Token", authToken);
             HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
 
             if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)

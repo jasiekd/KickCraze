@@ -6,6 +6,7 @@ string authToken = "b815483e661e4e57b5a1a27b80af477c";
 
 Dictionary<(string, int, int), dynamic> leagueTables = new();
 string competitionID = "2014";
+string seasonStartYear = "2022";
 
 
 HttpClient client = new(new CustomHttpClientHandler(delayBetweenRequests));
@@ -13,10 +14,9 @@ client.DefaultRequestHeaders.Add("X-Auth-Token", authToken);
 
 for (int i = 1; i <= 38; i++)
 {
-    string linkLearn = $"http://api.football-data.org/v4/competitions/2014/matches?season=2022&matchday={i}";
+    string linkLearn = $"http://api.football-data.org/v4/competitions/{competitionID}/matches?season={seasonStartYear}&matchday={i}";
     HttpResponseMessage responseL = await client.GetAsync(linkLearn);
 
-    // Przetworzenie odpowiedzi i wyświetlenie lig, które grają dzisiaj mecze
     if (responseL.IsSuccessStatusCode)
     {
         string content = await responseL.Content.ReadAsStringAsync();
@@ -30,10 +30,9 @@ for (int i = 1; i <= 38; i++)
 
             Console.WriteLine(mainMatch.ToString());
             //Console.WriteLine(match);
-            string date60DaysAgo = mainMatch.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
-            //Ostatnie 5 meczy dla wybranych druzyn z meczu
-            string homeLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.HomeTeamID}/matches?status=FINISHED&dateFrom={date60DaysAgo}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={competitionID}";
-            string awayLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.AwayTeamID}/matches?status=FINISHED&dateFrom={date60DaysAgo}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={competitionID}";
+            string date300DaysAgo = mainMatch.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
+            string homeLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.HomeTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgo}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={competitionID}";
+            string awayLast5URL = $"https://api.football-data.org/v4/teams/{mainMatch.AwayTeamID}/matches?status=FINISHED&dateFrom={date300DaysAgo}&dateTo={mainMatch.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10&competitions={competitionID}";
 
             Dictionary<int, Match> homeLast5Matches = new();
             Dictionary<int, Match> awayLast5Matches = new();
@@ -49,7 +48,6 @@ for (int i = 1; i <= 38; i++)
     }
     else
     {
-        // Obsługa błędu
         Console.WriteLine($"Error: {responseL.StatusCode}");
     }
 }
@@ -75,7 +73,7 @@ void SaveToCSV(string fileName, Match matchData, Dictionary<int, Match> homeTeam
     using StreamWriter writer = new(fileName, true);
     if (new FileInfo(fileName).Length == 0)
     {
-        writer.WriteLine("HomeTeamName,HomeTeamGoalDiff,HomeTeamPosition,AwayTeamName,AwayTeamGoalDiff,AwayTeamPosition,MatchResult,H1LastHomeTeamGoalDiffBef,H1LastHomeTeamGoalDiffAft,H1LastHomeTeamPosBef,H1LastHomeTeamPosAft,H1LastHomeTeamScoreBreak,H1LastHomeTeamScore,H1LastAwayTeamGoalDiffBef,H1LastAwayTeamGoalDiffAft,H1LastAwayTeamPosBef,H1LastAwayTeamPosBefAft,H1LastAwayTeamScoreBreak,H1LastAwayTeamScore,H1MatchResult,H2LastHomeTeamGoalDiffBef,H2LastHomeTeamGoalDiffAft,H2LastHomeTeamPosBef,H2LastHomeTeamPosAft,H2LastHomeTeamScoreBreak,H2LastHomeTeamScore,H2LastAwayTeamGoalDiffBef,H2LastAwayTeamGoalDiffAft,H2LastAwayTeamPosBef,H2LastAwayTeamPosBefAft,H2LastAwayTeamScoreBreak,H2LastAwayTeamScore,H2MatchResult,H3LastHomeTeamGoalDiffBef,H3LastHomeTeamGoalDiffAft,H3LastHomeTeamPosBef,H3LastHomeTeamPosAft,H3LastHomeTeamScoreBreak,H3LastHomeTeamScore,H3LastAwayTeamGoalDiffBef,H3LastAwayTeamGoalDiffAft,H3LastAwayTeamPosBef,H3LastAwayTeamPosBefAft,H3LastAwayTeamScoreBreak,H3LastAwayTeamScore,H3MatchResult,H4LastHomeTeamGoalDiffBef,H4LastHomeTeamGoalDiffAft,H4LastHomeTeamPosBef,H4LastHomeTeamPosAft,H4LastHomeTeamScoreBreak,H4LastHomeTeamScore,H4LastAwayTeamGoalDiffBef,H4LastAwayTeamGoalDiffAft,H4LastAwayTeamPosBef,H4LastAwayTeamPosBefAft,H4LastAwayTeamScoreBreak,H4LastAwayTeamScore,H4MatchResult,H5LastHomeTeamGoalDiffBef,H5LastHomeTeamGoalDiffAft,H5LastHomeTeamPosBef,H5LastHomeTeamPosAft,H5LastHomeTeamScoreBreak,H5LastHomeTeamScore,H5LastAwayTeamGoalDiffBef,H5LastAwayTeamGoalDiffAft,H5LastAwayTeamPosBef,H5LastAwayTeamPosBefAft,H5LastAwayTeamScoreBreak,H5LastAwayTeamScore,H5MatchResult,A1LastHomeTeamGoalDiffBef,A1LastHomeTeamGoalDiffAft,A1LastHomeTeamPosBef,A1LastHomeTeamPosAft,A1LastHomeTeamScoreBreak,A1LastHomeTeamScore,A1LastAwayTeamGoalDiffBef,A1LastAwayTeamGoalDiffAft,A1LastAwayTeamPosBef,A1LastAwayTeamPosBefAft,A1LastAwayTeamScoreBreak,A1LastAwayTeamScore,A1MatchResult,A2LastHomeTeamGoalDiffBef,A2LastHomeTeamGoalDiffAft,A2LastHomeTeamPosBef,A2LastHomeTeamPosAft,A2LastHomeTeamScoreBreak,A2LastHomeTeamScore,A2LastAwayTeamGoalDiffBef,A2LastAwayTeamGoalDiffAft,A2LastAwayTeamPosBef,A2LastAwayTeamPosBefAft,A2LastAwayTeamScoreBreak,A2LastAwayTeamScore,A2MatchResult,A3LastHomeTeamGoalDiffBef,A3LastHomeTeamGoalDiffAft,A3LastHomeTeamPosBef,A3LastHomeTeamPosAft,A3LastHomeTeamScoreBreak,A3LastHomeTeamScore,A3LastAwayTeamGoalDiffBef,A3LastAwayTeamGoalDiffAft,A3LastAwayTeamPosBef,A3LastAwayTeamPosBefAft,A3LastAwayTeamScoreBreak,A3LastAwayTeamScore,A3MatchResult,A4LastHomeTeamGoalDiffBef,A4LastHomeTeamGoalDiffAft,A4LastHomeTeamPosBef,A4LastHomeTeamPosAft,A4LastHomeTeamScoreBreak,A4LastHomeTeamScore,A4LastAwayTeamGoalDiffBef,A4LastAwayTeamGoalDiffAft,A4LastAwayTeamPosBef,A4LastAwayTeamPosBefAft,A4LastAwayTeamScoreBreak,A4LastAwayTeamScore,A4MatchResult,A5LastHomeTeamGoalDiffBef,A5LastHomeTeamGoalDiffAft,A5LastHomeTeamPosBef,A5LastHomeTeamPosAft,A5LastHomeTeamScoreBreak,A5LastHomeTeamScore,A5LastAwayTeamGoalDiffBef,A5LastAwayTeamGoalDiffAft,A5LastAwayTeamPosBef,A5LastAwayTeamPosBefAft,A5LastAwayTeamScoreBreak,A5LastAwayTeamScore,A5MatchResult");
+        writer.WriteLine("HomeTeamName,HomeTeamGoalDiff,HomeTeamPosition,AwayTeamName,AwayTeamGoalDiff,AwayTeamPosition,MatchResult,H1LastHomeTeamGoalDiffBef,H1LastHomeTeamGoalDiffAft,H1LastHomeTeamPosBef,H1LastHomeTeamPosAft,H1LastHomeTeamScoreBreak,H1LastHomeTeamScore,H1LastAwayTeamGoalDiffBef,H1LastAwayTeamGoalDiffAft,H1LastAwayTeamPosBef,H1LastAwayTeamPosAft,H1LastAwayTeamScoreBreak,H1LastAwayTeamScore,H1MatchResult,H2LastHomeTeamGoalDiffBef,H2LastHomeTeamGoalDiffAft,H2LastHomeTeamPosBef,H2LastHomeTeamPosAft,H2LastHomeTeamScoreBreak,H2LastHomeTeamScore,H2LastAwayTeamGoalDiffBef,H2LastAwayTeamGoalDiffAft,H2LastAwayTeamPosBef,H2LastAwayTeamPosAft,H2LastAwayTeamScoreBreak,H2LastAwayTeamScore,H2MatchResult,H3LastHomeTeamGoalDiffBef,H3LastHomeTeamGoalDiffAft,H3LastHomeTeamPosBef,H3LastHomeTeamPosAft,H3LastHomeTeamScoreBreak,H3LastHomeTeamScore,H3LastAwayTeamGoalDiffBef,H3LastAwayTeamGoalDiffAft,H3LastAwayTeamPosBef,H3LastAwayTeamPosAft,H3LastAwayTeamScoreBreak,H3LastAwayTeamScore,H3MatchResult,H4LastHomeTeamGoalDiffBef,H4LastHomeTeamGoalDiffAft,H4LastHomeTeamPosBef,H4LastHomeTeamPosAft,H4LastHomeTeamScoreBreak,H4LastHomeTeamScore,H4LastAwayTeamGoalDiffBef,H4LastAwayTeamGoalDiffAft,H4LastAwayTeamPosBef,H4LastAwayTeamPosAft,H4LastAwayTeamScoreBreak,H4LastAwayTeamScore,H4MatchResult,H5LastHomeTeamGoalDiffBef,H5LastHomeTeamGoalDiffAft,H5LastHomeTeamPosBef,H5LastHomeTeamPosAft,H5LastHomeTeamScoreBreak,H5LastHomeTeamScore,H5LastAwayTeamGoalDiffBef,H5LastAwayTeamGoalDiffAft,H5LastAwayTeamPosBef,H5LastAwayTeamPosAft,H5LastAwayTeamScoreBreak,H5LastAwayTeamScore,H5MatchResult,A1LastHomeTeamGoalDiffBef,A1LastHomeTeamGoalDiffAft,A1LastHomeTeamPosBef,A1LastHomeTeamPosAft,A1LastHomeTeamScoreBreak,A1LastHomeTeamScore,A1LastAwayTeamGoalDiffBef,A1LastAwayTeamGoalDiffAft,A1LastAwayTeamPosBef,A1LastAwayTeamPosAft,A1LastAwayTeamScoreBreak,A1LastAwayTeamScore,A1MatchResult,A2LastHomeTeamGoalDiffBef,A2LastHomeTeamGoalDiffAft,A2LastHomeTeamPosBef,A2LastHomeTeamPosAft,A2LastHomeTeamScoreBreak,A2LastHomeTeamScore,A2LastAwayTeamGoalDiffBef,A2LastAwayTeamGoalDiffAft,A2LastAwayTeamPosBef,A2LastAwayTeamPosAft,A2LastAwayTeamScoreBreak,A2LastAwayTeamScore,A2MatchResult,A3LastHomeTeamGoalDiffBef,A3LastHomeTeamGoalDiffAft,A3LastHomeTeamPosBef,A3LastHomeTeamPosAft,A3LastHomeTeamScoreBreak,A3LastHomeTeamScore,A3LastAwayTeamGoalDiffBef,A3LastAwayTeamGoalDiffAft,A3LastAwayTeamPosBef,A3LastAwayTeamPosAft,A3LastAwayTeamScoreBreak,A3LastAwayTeamScore,A3MatchResult,A4LastHomeTeamGoalDiffBef,A4LastHomeTeamGoalDiffAft,A4LastHomeTeamPosBef,A4LastHomeTeamPosAft,A4LastHomeTeamScoreBreak,A4LastHomeTeamScore,A4LastAwayTeamGoalDiffBef,A4LastAwayTeamGoalDiffAft,A4LastAwayTeamPosBef,A4LastAwayTeamPosAft,A4LastAwayTeamScoreBreak,A4LastAwayTeamScore,A4MatchResult,A5LastHomeTeamGoalDiffBef,A5LastHomeTeamGoalDiffAft,A5LastHomeTeamPosBef,A5LastHomeTeamPosAft,A5LastHomeTeamScoreBreak,A5LastHomeTeamScore,A5LastAwayTeamGoalDiffBef,A5LastAwayTeamGoalDiffAft,A5LastAwayTeamPosBef,A5LastAwayTeamPosAft,A5LastAwayTeamScoreBreak,A5LastAwayTeamScore,A5MatchResult");
     }
     string line = string.Join(",", $"{matchData.HomeTeamName},{matchData.HomeTeamGoalDiffBefore},{matchData.HomeTeamPositionBefore},{matchData.AwayTeamName},{matchData.AwayTeamGoalDiffBefore},{matchData.AwayTeamPositionBefore},{matchData.MatchResult}");
     string line2 = string.Join(",", homeTeamMatches.Select(match =>
@@ -120,7 +118,7 @@ async Task<TeamPositions> getPositions(int homeTeamID, int awayTeamID, string se
     }
     else
     {
-        string linkTable = $"https://api.football-data.org/v4/competitions/{leagueID}/standings/?season={season}&matchday={matchDay - 1}";  //tabela ligi
+        string linkTable = $"https://api.football-data.org/v4/competitions/{leagueID}/standings/?season={season}&matchday={matchDay - 1}"; 
         HttpResponseMessage responseTable = await client.GetAsync(linkTable);
         if (responseTable.IsSuccessStatusCode)
         {
@@ -131,7 +129,6 @@ async Task<TeamPositions> getPositions(int homeTeamID, int awayTeamID, string se
         }
         else
         {
-            // Obsługa błędu
             Console.WriteLine($"Error: {responseTable.StatusCode}");
         }
     }
@@ -213,7 +210,6 @@ async Task getLast5MatchesAsync(Dictionary<int, Match> last5Matches, string last
         }
         else
         {
-            // Obsługa błędu
             Console.WriteLine($"Error: {responseLast5.StatusCode}");
         }
     }

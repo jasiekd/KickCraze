@@ -20,7 +20,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(13)] public float H1LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(14)] public float H1LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(15)] public float H1LastAwayTeamPosBef { get; set; }
-        [LoadColumn(16)] public float H1LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(16)] public float H1LastAwayTeamPosAft { get; set; }
         [LoadColumn(17)] public float H1LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(18)] public float H1LastAwayTeamScore { get; set; }
         [LoadColumn(19)] public string H1MatchResult { get; set; }
@@ -33,7 +33,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(26)] public float H2LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(27)] public float H2LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(28)] public float H2LastAwayTeamPosBef { get; set; }
-        [LoadColumn(29)] public float H2LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(29)] public float H2LastAwayTeamPosAft { get; set; }
         [LoadColumn(30)] public float H2LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(31)] public float H2LastAwayTeamScore { get; set; }
         [LoadColumn(32)] public string H2MatchResult { get; set; }
@@ -46,7 +46,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(39)] public float H3LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(40)] public float H3LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(41)] public float H3LastAwayTeamPosBef { get; set; }
-        [LoadColumn(42)] public float H3LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(42)] public float H3LastAwayTeamPosAft { get; set; }
         [LoadColumn(43)] public float H3LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(44)] public float H3LastAwayTeamScore { get; set; }
         [LoadColumn(45)] public string H3MatchResult { get; set; }
@@ -59,7 +59,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(52)] public float H4LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(53)] public float H4LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(54)] public float H4LastAwayTeamPosBef { get; set; }
-        [LoadColumn(55)] public float H4LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(55)] public float H4LastAwayTeamPosAft { get; set; }
         [LoadColumn(56)] public float H4LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(57)] public float H4LastAwayTeamScore { get; set; }
         [LoadColumn(58)] public string H4MatchResult { get; set; }
@@ -72,7 +72,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(65)] public float H5LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(66)] public float H5LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(67)] public float H5LastAwayTeamPosBef { get; set; }
-        [LoadColumn(68)] public float H5LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(68)] public float H5LastAwayTeamPosAft { get; set; }
         [LoadColumn(69)] public float H5LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(70)] public float H5LastAwayTeamScore { get; set; }
         [LoadColumn(71)] public string H5MatchResult { get; set; }
@@ -85,7 +85,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(78)] public float A1LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(79)] public float A1LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(80)] public float A1LastAwayTeamPosBef { get; set; }
-        [LoadColumn(81)] public float A1LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(81)] public float A1LastAwayTeamPosAft { get; set; }
         [LoadColumn(82)] public float A1LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(83)] public float A1LastAwayTeamScore { get; set; }
         [LoadColumn(84)] public string A1MatchResult { get; set; }
@@ -98,7 +98,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(91)] public float A2LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(92)] public float A2LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(93)] public float A2LastAwayTeamPosBef { get; set; }
-        [LoadColumn(94)] public float A2LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(94)] public float A2LastAwayTeamPosAft { get; set; }
         [LoadColumn(95)] public float A2LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(96)] public float A2LastAwayTeamScore { get; set; }
         [LoadColumn(97)] public string A2MatchResult { get; set; }
@@ -111,7 +111,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(104)] public float A3LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(105)] public float A3LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(106)] public float A3LastAwayTeamPosBef { get; set; }
-        [LoadColumn(107)] public float A3LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(107)] public float A3LastAwayTeamPosAft { get; set; }
         [LoadColumn(108)] public float A3LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(109)] public float A3LastAwayTeamScore { get; set; }
         [LoadColumn(110)] public string A3MatchResult { get; set; }
@@ -124,7 +124,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(117)] public float A4LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(118)] public float A4LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(119)] public float A4LastAwayTeamPosBef { get; set; }
-        [LoadColumn(120)] public float A4LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(120)] public float A4LastAwayTeamPosAft { get; set; }
         [LoadColumn(121)] public float A4LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(122)] public float A4LastAwayTeamScore { get; set; }
         [LoadColumn(123)] public string A4MatchResult { get; set; }
@@ -137,7 +137,7 @@ namespace KickCraze.Api.Model
         [LoadColumn(130)] public float A5LastAwayTeamGoalDiffBef { get; set; }
         [LoadColumn(131)] public float A5LastAwayTeamGoalDiffAft { get; set; }
         [LoadColumn(132)] public float A5LastAwayTeamPosBef { get; set; }
-        [LoadColumn(133)] public float A5LastAwayTeamPosBefAft { get; set; }
+        [LoadColumn(133)] public float A5LastAwayTeamPosAft { get; set; }
         [LoadColumn(134)] public float A5LastAwayTeamScoreBreak { get; set; }
         [LoadColumn(135)] public float A5LastAwayTeamScore { get; set; }
         [LoadColumn(136)] public string A5MatchResult { get; set; }
