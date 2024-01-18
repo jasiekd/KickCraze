@@ -30,35 +30,10 @@ namespace KickCraze.Api.Services
                 getLeaguesResponseDto.Leagues.Add(new LeagueElement(leagueElement.LeagueID.ToString(), leagueElement.LeagueName, leagueElement.LeagueEmblemURL));
             }
             return new OkObjectResult(getLeaguesResponseDto);
-            
-
-            //var response = await _customHttpClient.GetAsync($"competitions/");
-            //if(response.IsSuccessStatusCode)
-            //{
-            //    GetLeaguesResponseDto getLeaguesResponseDto = new();
-            //    string responseData = await response.Content.ReadAsStringAsync();
-            //    dynamic jsonData = JsonConvert.DeserializeObject(responseData);
-            //    getLeaguesResponseDto.Leagues.Add(new LeagueElement("ALL", "Wszystkie ligi", "https://i.imgur.com/zDqOHeY.png", true));
-            //    foreach (var league in jsonData.competitions)
-            //    {
-            //        string type = league.type;
-            //        if (type != "LEAGUE") continue;
-            //        string leagueID = league.id;
-            //        string leagueName = league.name;
-            //        string leagueEmblemURL = league.emblem;
-            //        getLeaguesResponseDto.Leagues.Add(new LeagueElement(leagueID, leagueName, leagueEmblemURL));
-            //    }
-            //    return new OkObjectResult(getLeaguesResponseDto);
-            //}
-            //else
-            //{
-            //    return new BadRequestResult();
-            //}
         }
         public async Task<IActionResult> GetLeagueTable(GetLeagueTableRequestDto getLeagueTableRequestDto)
         {
-            //var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings");
-            var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings?date={getLeagueTableRequestDto.Date:yyyy-MM-dd}"); //pomyslec nad tym
+            var response = await _customHttpClient.GetAsync($"competitions/{getLeagueTableRequestDto.LeagueID}/standings?date={getLeagueTableRequestDto.Date:yyyy-MM-dd}"); 
             if(response.IsSuccessStatusCode)
             {
                 GetLeagueTableResponseDto getLeagueTableResponseDto = new();
@@ -97,8 +72,7 @@ namespace KickCraze.Api.Services
             else
             {
                 return new BadRequestResult();
-            }
-            
+            } 
         }
     }
 }

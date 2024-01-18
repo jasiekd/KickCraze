@@ -23,6 +23,8 @@
   padding: 5px;
   transition: background-color 0.3s;
   white-space: nowrap;
+  color: white;
+  text-decoration: none;
 }
 .leagueS .leagueTable:hover {
   background-color: #40464f;

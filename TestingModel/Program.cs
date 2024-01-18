@@ -17,7 +17,11 @@ string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEn
 //var data = mlContext.Data.LoadFromTextFile<FootballMatchData>($"{currentDirectory}\\data.csv", options);
 var data = mlContext.Data.LoadFromTextFile<FootballMatchData>($"{currentDirectory}\\dataz0.csv", options);
 //var data = mlContext.Data.LoadFromTextFile<FootballMatchData>($"{currentDirectory}\\dataz0dodatkowedane.csv", options);
-int parts = 5;
+
+int parts = 10; //parametr odpowiadajacy na ile czesci maja byc podzielone dane
+int numberOfTrees = 6; //parametr ustawiajacy ilosc tworzonych drzew do utworzenia modelu
+int numberOfLeaves = 4; //parametr ustawiajacy maksymalna ilosc lisci na dane drzewo
+double learningRate = 0.005; //parametr ustawiajacy wspolczynnik uczenia
 var crossValidation = mlContext.Data.CrossValidationSplit(data, numberOfFolds: parts, seed: 0);
 
 var featureColumns = data.Schema
@@ -39,7 +43,7 @@ var pipeline = mlContext.Transforms.Conversion.MapValueToKey(@"MatchResult", @"M
     .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName: @"A4MatchResult", outputColumnName: @"A4MatchResult"))
     .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName: @"A5MatchResult", outputColumnName: @"A5MatchResult"))
     .Append(mlContext.Transforms.Concatenate("Features", featureColumns))
-    .Append(mlContext.MulticlassClassification.Trainers.OneVersusAll(binaryEstimator: mlContext.BinaryClassification.Trainers.FastTree(new FastTreeBinaryTrainer.Options() { RandomStart = true, NumberOfTrees = 6, NumberOfLeaves = 6, MinimumExampleCountPerLeaf = 2, LearningRate = 0.001, LabelColumnName = @"MatchResult", FeatureColumnName = @"Features", DiskTranspose = false, FeatureFraction = 1, }), labelColumnName: @"MatchResult"))
+    .Append(mlContext.MulticlassClassification.Trainers.OneVersusAll(binaryEstimator: mlContext.BinaryClassification.Trainers.FastTree(new FastTreeBinaryTrainer.Options() { RandomStart = true, NumberOfTrees = numberOfTrees, NumberOfLeaves = numberOfLeaves, MinimumExampleCountPerLeaf = 2, LearningRate = learningRate, LabelColumnName = @"MatchResult", FeatureColumnName = @"Features", DiskTranspose = false, FeatureFraction = 1, }), labelColumnName: @"MatchResult"))
     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName: @"PredictedLabel", inputColumnName: @"PredictedLabel"));
 
 List<double> featuresL = new();
@@ -87,6 +91,7 @@ Console.WriteLine($"MacroAccuracy: {metricsBestL.MacroAccuracy}");
 Console.WriteLine($"MicroAccuracy: {metricsBestL.MicroAccuracy}");
 Console.WriteLine($"ConfusionMatrix: ");
 Console.WriteLine(metricsBestL.ConfusionMatrix.GetFormattedConfusionTable());
+
 
 var predictionsBest = saveModel.Transform(crossValidation.ElementAt(features.IndexOf(features.Max())).TestSet);
 var metricsBest = mlContext.MulticlassClassification.Evaluate(predictionsBest, labelColumnName: @"MatchResult");

@@ -5,7 +5,9 @@ TimeSpan delayBetweenRequests = TimeSpan.FromSeconds(60);
 string authToken = "b815483e661e4e57b5a1a27b80af477c";
 
 Dictionary<(string, int, int), dynamic> leagueTables = new();
-string competitionID = "2014";
+
+//zmienne ustalajace z ktorej ligi oraz sezonu maja byc pobrane dane
+string competitionID = "2021";
 string seasonStartYear = "2022";
 
 

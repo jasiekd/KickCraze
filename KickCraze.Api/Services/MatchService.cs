@@ -5,10 +5,6 @@ using Microsoft.Extensions.ML;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace KickCraze.Api.Services
 {
@@ -226,8 +222,6 @@ namespace KickCraze.Api.Services
                     return null;
                 }
             }
-
-            //Console.WriteLine(standings);
             if (standings != null && standings.Count > 0)
             {
                 var table = standings[0].table;
@@ -272,12 +266,9 @@ namespace KickCraze.Api.Services
                 string contentLast = await responseLast5.Content.ReadAsStringAsync();
                 dynamic dataLast = JsonConvert.DeserializeObject(contentLast);
 
-                //Console.WriteLine(dataLast);
-
                 for (int i = dataLast.matches.Count - 1; i >= 0; i--)
                 {
                     if (last5Matches.Count == 5) break;
-                    //Console.WriteLine(match);
                     string type = dataLast.matches[i].competition.type;
                     string stage = dataLast.matches[i].stage;
                     if (type != "LEAGUE") continue;
@@ -440,7 +431,7 @@ namespace KickCraze.Api.Services
 
         public async Task<IActionResult> GetLastMatchesForTeam(GetLastMatchesForTeamRequestDto matchData)
         {
-            string date300DaysAgo = matchData.MatchDate.AddDays(-60).ToString("yyyy-MM-dd");
+            string date300DaysAgo = matchData.MatchDate.AddDays(-300).ToString("yyyy-MM-dd");
             HttpResponseMessage response = await _customHttpClient.GetAsync($"teams/{matchData.TeamID}/matches?status=FINISHED&dateFrom={date300DaysAgo}&dateTo={matchData.MatchDate.AddDays(-1):yyyy-MM-dd}&limit=10");
 
             if (response.IsSuccessStatusCode)

@@ -47,6 +47,8 @@ export default function MatchSchedule({
     //console.log(data);
     if (data !== null) {
       setMatchesData(data);
+    }else{
+      setMatchesData([]);
     }
 
     setIsLoading(false);

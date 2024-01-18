@@ -8,6 +8,8 @@
   width: fit-content;
   min-width: 100%;
   gap: 5px;
+  color: white;
+  text-decoration: none;
 }
 .leagueI:hover {
   background-color: #40464f;

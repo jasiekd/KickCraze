@@ -30,12 +30,14 @@ var featureColumns = data.Schema
 
 var topResults = new List<(double MacroAccuracyTrain, double MacroAccuracyTest, FastTreeBinaryTrainer.Options Parameters)>();
 var bestMacroAccuracy = double.MinValue;
-List<double> learningRates = new() { 0.001, 0.005, 0.01 };
+List<double> learningRates = new() { 0.001, 0.005, 0.01 }; // lista z wspolczynnikami uczenia
 
 for (int j = 0; j < learningRates.Count; j++)
 {
+    //zakres parametru utworzonych liczby drzew podczas tworzenia modelu
     for (int numberOfTrees = 4; numberOfTrees <= 12; numberOfTrees += 2)
     {
+        //zakres parametru maksymalnej liczby lisci do tworzenia modelu
         for (int numberOfLeaves = 4; numberOfLeaves <= 10; numberOfLeaves += 2)
         {
             var trainerOptions = new FastTreeBinaryTrainer.Options()
