@@ -17,7 +17,3 @@ Projekt został zrealizowany z wykorzystaniem następujących technologii:
 - ML.NET
 - React
 - ASP.NET Core
-
-## Użytkowanie
-
-Krótki opis jak używać aplikacji, z ewentualnymi przykładami kodu lub zrzutami ekranu:
